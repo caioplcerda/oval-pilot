@@ -1,0 +1,14 @@
+[
+ {
+  "name": "b41b",
+  "mode": "league",
+  "matches": 330,
+  "seed0": 2600000,
+  "entries": [
+   "orig=proc:/tmp:/tmp/claude-gx2=4",
+   "third=proc:/tmp:env GPX=third /tmp/claude-gx2=4",
+   "truel=proc:/tmp:env GPX=truel /tmp/claude-gx2=4",
+   "both=proc:/tmp:env GPX=third,truel /tmp/claude-gx2=4"
+  ]
+ }
+]

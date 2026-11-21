@@ -13,9 +13,11 @@ def main():
     ap.add_argument("--matches", type=int, default=10)
     ap.add_argument("--start", type=int, default=0)
     ap.add_argument("--spec", default="bot:bot.py?sneak")
+    ap.add_argument("--max-t", type=float, default=480)
     a = ap.parse_args()
     cfg = arena.load_cfg(".")
     fac = arena.make_factory(a.spec, ".")
+    arena.make_factory("bot:bot.py?sneak", ".")
     world = next(iter(arena._MODS.values()))._shared[0]
     rows = []
     orig = arena.League._die
@@ -29,7 +31,10 @@ def main():
         seed = 1 + a.start + k
         sim = arena.League(cfg, world, seed, [("x", fac)] * 16, econ=True)
         sim._diag = []
-        res = sim.run(480)
+        try:
+            res = sim.run(480)
+        finally:
+            arena.close_procs()
         surv = [m for m in sim.mechs if m.alive]
         rows.append({"deaths": sim._diag, "end_t": round(sim.t, 1), "survivors": len(surv),
                      "winner_cubes": max((r["stats"]["cubes"] for r in res if r["place"] == 1), default=0)})

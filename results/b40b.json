@@ -1,0 +1,13 @@
+[
+ {
+  "name": "b40b",
+  "mode": "league",
+  "matches": 330,
+  "seed0": 2400000,
+  "entries": [
+   "orig=proc:/tmp:/tmp/claude-gx=6",
+   "fl70=proc:/tmp:env GPFFA=FightLoot=70 /tmp/claude-gx=5",
+   "fl120=proc:/tmp:env GPFFA=FightLoot=120 /tmp/claude-gx=5"
+  ]
+ }
+]

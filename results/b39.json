@@ -1,0 +1,14 @@
+[
+ {
+  "name": "combo1",
+  "mode": "league",
+  "matches": 330,
+  "seed0": 2200000,
+  "entries": [
+   "orig=proc:/tmp:/tmp/claude-gx=4",
+   "vf=proc:/tmp:env GPFFA=Vulture=0.4,OddsFlee=0.35 /tmp/claude-gx=4",
+   "vfs=proc:/tmp:env GPFFA=Vulture=0.4,OddsFlee=0.35,Shy=150 /tmp/claude-gx=4",
+   "fs=proc:/tmp:env GPFFA=OddsFlee=0.35,Shy=150 /tmp/claude-gx=4"
+  ]
+ }
+]
