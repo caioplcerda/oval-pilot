@@ -56,7 +56,10 @@ def main():
         random.Random(seed * 31 + 7).shuffle(order)  # which slot gets which entry
         shuffled = [entries[i] for i in order]
         sim = arena.League(cfg, world, seed, shuffled, econ=args.econ)
-        res = sim.run(args.max_t)
+        try:
+            res = sim.run(args.max_t)
+        finally:
+            arena.close_procs()
         for r in res:
             a = agg.setdefault(r["label"], {})
             a["n"] = a.get("n", 0) + 1

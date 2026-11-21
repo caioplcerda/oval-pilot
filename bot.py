@@ -800,9 +800,11 @@ class Bot:
         late_only = late
         # shy opening: most free-for-all deaths happen in the first minute; stay out of fights we did not start
         # practice house bots only die to us (or rarely NPCs/zone); in a free-for-all others die early
-        if 16 - obs["alive"] - self.kills >= self._fp("ffaN", 1):
-            self.ffa = True
+        if 16 - obs["alive"] - self.kills >= self._fp("ffaN", 1) and t < self._fp("ffaTmax", 100):
+            self.ffa = True  # (late deaths can be house bots caught by the zone, so only trust early ones)
         shy = self._fp("shyT", 0) > t and obs["alive"] > self._fp("shyA", 0)
+        if "auto2" in self.flags and not self.ffa:
+            shy = False  # play the practice game until a free-for-all is proven
         if "auto" in self.flags and not self.ffa and t >= self._fp("autoT", 30):
             shy = False  # nobody died without us by now: practice squad, play to kill
         if shy and target is not None:

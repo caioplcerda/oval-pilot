@@ -66,7 +66,7 @@ def main():
             tasks.append((e, e.get("seed0", 0) + s, min(CHUNK, n - s)))
     data = {e["name"]: [] for e in exps}
     t0 = time.time()
-    with ProcessPoolExecutor(max_workers=os.cpu_count()) as ex:
+    with ProcessPoolExecutor(max_workers=int(os.environ.get("BATCH_WORKERS", os.cpu_count()))) as ex:
         futs = [ex.submit(run_chunk, *t) for t in tasks]
         for i, f in enumerate(as_completed(futs)):
             name, lines = f.result()

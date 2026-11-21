@@ -1,0 +1,6 @@
+[
+ {"name":"ffa_auto2","mode":"league","matches":330,"entries":["base=bot:bot.py?sneak=4","a2_240=bot:bot.py?sneak,shyhide,auto2,shyT240=4","a2_A4=bot:bot.py?sneak,shyhide,auto2,shyT480,shyA4=4","a2_A6=bot:bot.py?sneak,shyhide,auto2,shyT480,shyA6=4"]},
+ {"name":"pr_base","mode":"practice","matches":660,"flags":"sneak"},
+ {"name":"pr_a2_240","mode":"practice","matches":660,"flags":"sneak,shyhide,auto2,shyT240"},
+ {"name":"pr_a2_A4","mode":"practice","matches":660,"flags":"sneak,shyhide,auto2,shyT480,shyA4"}
+]

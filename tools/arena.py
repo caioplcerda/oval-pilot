@@ -681,8 +681,74 @@ def load_bot_module(path):
     return mod
 
 
+_PROCS = []
+
+
+class ProcBot:
+    """Runs another team's bot as a subprocess speaking mechfight/1 (spec proc:<dir>:<entry.py>)."""
+
+    def __init__(self, hello, bot_dir, entry, kit):
+        import subprocess
+        h = dict(hello)
+        h["map"] = {"dir": os.path.abspath(os.path.join(kit, "arena")), "files": ["v2/world.json", "v2/terrain.i16"]}
+        cmd = [sys.executable, "-u"] + entry.split()
+        self.p = subprocess.Popen(cmd, cwd=bot_dir, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+                                  stderr=subprocess.DEVNULL, text=True, bufsize=1)
+        _PROCS.append(self.p)
+        self.flags = set()
+        self.dead = False
+        self._send(h)
+        self._read(20.0)  # ready
+
+    def _send(self, msg):
+        try:
+            self.p.stdin.write(json.dumps(msg) + "\n")
+            self.p.stdin.flush()
+        except Exception:
+            self.dead = True
+
+    def _read(self, timeout):
+        import select
+        if self.dead:
+            return None
+        r, _, _ = select.select([self.p.stdout], [], [], timeout)
+        if not r:
+            return None
+        line = self.p.stdout.readline()
+        if not line:
+            self.dead = True
+            return None
+        try:
+            return json.loads(line)
+        except ValueError:
+            return None
+
+    def act(self, obs):
+        self._send(obs)
+        self.n = getattr(self, "n", 0) + 1
+        a = self._read(0.25)
+        if a:
+            self.ok = getattr(self, "ok", 0) + 1
+        while a is not None and a.get("tick") not in (None, obs.get("tick")):
+            a = self._read(0.05)
+        return a or {}
+
+
+def close_procs():
+    while _PROCS:
+        p = _PROCS.pop()
+        try:
+            p.kill()
+            p.wait(timeout=2)
+        except Exception:
+            pass
+
+
 def make_factory(spec, kit):
     """Returns factory(hello, world) -> bot instance."""
+    if spec.startswith("proc:"):
+        _, bot_dir, entry = spec.split(":", 2)
+        return lambda hello, world: ProcBot(hello, bot_dir, entry, kit)
     if spec == "example":
         return lambda hello, world: ExampleBot(hello)
     if spec.startswith("hunter"):
