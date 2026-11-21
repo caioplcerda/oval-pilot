@@ -1,0 +1,4 @@
+[
+ {"name":"mir_v2","mode":"league","matches":550,"seed0":120000,"entries":["v1=bot:bot.py?sneak,shyhide,auto2,shyT480,shyA6=5","v1r=bot:bot.py?sneak,shyhide,auto2,shyT480,shyA6,rush,rushT60=5","v2=bot:bot.py?sneak,shyhide,auto2,shyT480,shyA2,ev,rush,rushT60=6"]},
+ {"name":"pr_v2","mode":"practice","matches":660,"flags":"sneak,shyhide,auto2,shyT480,shyA2,ev,rush,rushT60"}
+]

@@ -1,0 +1,6 @@
+[
+ {"name":"pr_v2","mode":"practice","matches":880,"seed0":300000,"flags":"sneak,shyhide,auto2,shyT480,shyA2,ev,rush,rushT60"},
+ {"name":"pr_r2_90","mode":"practice","matches":880,"seed0":300000,"flags":"sneak,shyhide,auto2,shyT480,shyA2,ev,rush,rushT60,rush2,rush2T90"},
+ {"name":"pr_r2_150","mode":"practice","matches":880,"seed0":300000,"flags":"sneak,shyhide,auto2,shyT480,shyA2,ev,rush,rushT60,rush2,rush2T150"},
+ {"name":"pr_r90","mode":"practice","matches":880,"seed0":300000,"flags":"sneak,shyhide,auto2,shyT480,shyA2,ev,rush,rushT60,rushT90"}
+]

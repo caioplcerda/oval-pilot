@@ -1,0 +1,65 @@
+[
+ {
+  "name": "pr_v2",
+  "mode": "practice",
+  "matches": 770,
+  "seed0": 0,
+  "flags": "sneak,shyhide,auto2,shyT480,shyA2,ev,rush,rushT60"
+ },
+ {
+  "name": "pr_ldodge",
+  "mode": "practice",
+  "matches": 770,
+  "seed0": 0,
+  "flags": "sneak,shyhide,auto2,shyT480,shyA2,ev,rush,rushT60,ldodge"
+ },
+ {
+  "name": "pr_ldodgeW16",
+  "mode": "practice",
+  "matches": 770,
+  "seed0": 0,
+  "flags": "sneak,shyhide,auto2,shyT480,shyA2,ev,rush,rushT60,ldodge,ldW16"
+ },
+ {
+  "name": "pr_losbreak",
+  "mode": "practice",
+  "matches": 770,
+  "seed0": 0,
+  "flags": "sneak,shyhide,auto2,shyT480,shyA2,ev,rush,rushT60,losbreak"
+ },
+ {
+  "name": "pr_losbreakP40",
+  "mode": "practice",
+  "matches": 770,
+  "seed0": 0,
+  "flags": "sneak,shyhide,auto2,shyT480,shyA2,ev,rush,rushT60,losbreak,lbP40"
+ },
+ {
+  "name": "pr_losbreakT45",
+  "mode": "practice",
+  "matches": 770,
+  "seed0": 0,
+  "flags": "sneak,shyhide,auto2,shyT480,shyA2,ev,rush,rushT60,losbreak,lbT45"
+ },
+ {
+  "name": "pr_early",
+  "mode": "practice",
+  "matches": 770,
+  "seed0": 0,
+  "flags": "sneak,shyhide,auto2,shyT480,shyA2,ev,rush,rushT60,early"
+ },
+ {
+  "name": "pr_ld_lb",
+  "mode": "practice",
+  "matches": 770,
+  "seed0": 0,
+  "flags": "sneak,shyhide,auto2,shyT480,shyA2,ev,rush,rushT60,ldodge,losbreak"
+ },
+ {
+  "name": "pr_ld_lb_early",
+  "mode": "practice",
+  "matches": 770,
+  "seed0": 0,
+  "flags": "sneak,shyhide,auto2,shyT480,shyA2,ev,rush,rushT60,ldodge,losbreak,early"
+ }
+]

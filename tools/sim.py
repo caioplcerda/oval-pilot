@@ -24,6 +24,9 @@ DT = 0.1  # one decision per 0.1 s
 NOISE_MULT = 5.0  # house-bot aim noise multiplier: with HUNT 1.0 and 3 lasers the kit example scores ~1.2 (real 1.15)
 LASER_BOTS = 3
 HUNT_MULT = 1.0  # scales how far house bots chase us
+SQUAD = False      # published practice rules: weakest hunts first, one more per house death, all after SQUAD_LATE
+SQUAD_LATE = 300.0
+SQUAD_DEF = 60.0   # non-hunters only shoot when we are this close
 
 
 def wrap(a):
@@ -223,6 +226,15 @@ class Sim:
             m.strafe_t = self.t + 1 + self.rng.random() * 2
         tier = {4.0: (150, 110), 2.5: (260, 140), 1.3: (420, 170), 0.7: (1e9, 200)}.get(m.skill, (300, 150))
         hunt_r, fire_r = tier[0] * HUNT_MULT, tier[1]
+        if SQUAD:
+            house = [h for h in self.mechs[1:] if h.alive]
+            dead = 15 - len(house)
+            k = 15 if self.t >= SQUAD_LATE else 1 + dead
+            hunters = sorted(house, key=lambda h: (-h.skill, h.id))[:k]
+            if m in hunters:
+                hunt_r = 1e9
+            else:
+                hunt_r, fire_r = 0.0, min(fire_r, SQUAD_DEF)
         if math.dist(m.pos[:2], c) > r - 10 or d > hunt_r:
             mv = math.atan2(nc[1] - m.pos[1], nc[0] - m.pos[0])
             if math.dist(m.pos[:2], nc) < 40:
@@ -552,7 +564,7 @@ class ExampleBot:
 
 
 def main():
-    global NOISE_MULT, LASER_BOTS, HUNT_MULT, B
+    global NOISE_MULT, LASER_BOTS, HUNT_MULT, B, SQUAD, SQUAD_LATE, SQUAD_DEF
     ap = argparse.ArgumentParser()
     ap.add_argument("--matches", type=int, default=6)
     ap.add_argument("--kit", default="..")
@@ -561,6 +573,9 @@ def main():
     ap.add_argument("--noise", type=float, default=5.0)
     ap.add_argument("--lasers", type=int, default=3)
     ap.add_argument("--hunt", type=float, default=1.0)
+    ap.add_argument("--squad", action="store_true")
+    ap.add_argument("--squad-late", type=float, default=300.0)
+    ap.add_argument("--squad-def", type=float, default=60.0)
     ap.add_argument("--botfile", default="")
     ap.add_argument("--start", type=int, default=0, help="seed offset (for parallel runs)")
     args = ap.parse_args()
@@ -575,6 +590,7 @@ def main():
         cfg = json.loads(f.readline())["config"]
     world = B.World(os.path.join(args.kit, "arena"))
     NOISE_MULT, LASER_BOTS, HUNT_MULT = args.noise, args.lasers, args.hunt
+    SQUAD, SQUAD_LATE, SQUAD_DEF = args.squad, args.squad_late, args.squad_def
     pts = []
     for k in range(args.matches):
         r = Sim(cfg, world, args.seed + args.start + k, B.Bot if args.bot == "ours" else ExampleBot).run()

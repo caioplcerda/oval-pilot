@@ -23,6 +23,7 @@ def run_chunk(exp, start, n):
         cmd = [PY, "tools/sim.py", "--kit", ".", "--matches", str(n), "--start", str(start)]
         if exp.get("botfile"):
             cmd += ["--botfile", exp["botfile"]]
+        cmd += exp.get("simargs", [])
         env = dict(os.environ, MR_FLAGS=exp.get("flags", "sneak"))
     out = subprocess.run(cmd, cwd=ROOT, env=env, capture_output=True, text=True).stdout
     key = '"means"' if exp["mode"] == "league" else '"place"'

@@ -1,0 +1,4 @@
+[
+ {"name":"mir_evv","mode":"league","matches":440,"seed0":90000,"entries":["v1=bot:bot.py?sneak,shyhide,auto2,shyT480,shyA6=4","ev=bot:bot.py?sneak,shyhide,auto2,shyT480,shyA2,ev=4","vult=bot:bot.py?sneak,shyhide,auto2,shyT480,shyA6,vult=4","evv=bot:bot.py?sneak,shyhide,auto2,shyT480,shyA2,ev,vult=4"]},
+ {"name":"mir_evtune","mode":"league","matches":440,"seed0":95000,"entries":["evv=bot:bot.py?sneak,shyhide,auto2,shyT480,shyA2,ev,vult=4","s45=bot:bot.py?sneak,shyhide,auto2,shyT480,shyA2,ev,vult,evS0.45=4","s65=bot:bot.py?sneak,shyhide,auto2,shyT480,shyA2,ev,vult,evS0.65=4","g13=bot:bot.py?sneak,shyhide,auto2,shyT480,shyA2,ev,vult,evG1.3=4"]}
+]
