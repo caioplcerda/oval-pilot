@@ -1,0 +1,15 @@
+[
+ {
+  "name": "b47",
+  "mode": "league",
+  "matches": 440,
+  "seed0": 3200000,
+  "min_n": 110,
+  "entries": [
+   "cur=proc:/tmp:env GPFFA=FightBoost=40,DodgeBoost=25,ThreatBoost=30,SpeedUp=true /tmp/claude-gy3=4",
+   "jink=proc:/tmp:env GPFFA=FightBoost=40,DodgeBoost=25,ThreatBoost=30,SpeedUp=true GPX=jink /tmp/claude-gy3=4",
+   "hyst=proc:/tmp:env GPFFA=FightBoost=40,DodgeBoost=25,ThreatBoost=30,SpeedUp=true GPX=hyst /tmp/claude-gy3=4",
+   "chgb=proc:/tmp:env GPFFA=FightBoost=40,DodgeBoost=25,ThreatBoost=30,SpeedUp=true GPX=chargeboost /tmp/claude-gy3=4"
+  ]
+ }
+]
