@@ -6,5 +6,5 @@ COPY --from=bun /usr/local/bin/bun /usr/local/bin/bun
 WORKDIR /bot
 COPY mechfight.py bot.py hybrid.py ./
 COPY ttun/ ./ttun/
-ENV MR_TTUN=aa8a453
+ENV MR_TTUN=edf5776
 ENTRYPOINT ["python3", "-u", "/bot/hybrid.py"]
