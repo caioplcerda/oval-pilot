@@ -16,5 +16,5 @@ WORKDIR /bot
 COPY mechfight.py bot.py hybrid.py ./
 COPY ttun/ ./ttun/
 COPY helpers/giddy0c364d9/LICENSE ./helpers/giddy0c364d9/
-ENV MR_TTUN=11350d3 MR_HELPER=/usr/local/bin/mechbot MR_NOSWITCH=1 MR_TTUN_SALT=4
+ENV MR_TTUN=11350d3 MR_HELPER=/usr/local/bin/mechbot MR_NOSWITCH=1 MR_TTUN_SALT=5
 ENTRYPOINT ["python3", "-u", "/bot/hybrid.py"]
