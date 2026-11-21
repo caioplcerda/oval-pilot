@@ -18,7 +18,7 @@ from array import array
 import mechfight as mf
 
 TAU = 2 * math.pi
-FLAGS = set(x for x in os.environ.get("MR_FLAGS", "sneak,shyhide,auto2,shyT480,shyA2,ev,rush,rushT60,econ,endgame").split(",") if x)  # strategy switches (env MR_FLAGS overrides; dev only)
+FLAGS = set(x for x in os.environ.get("MR_FLAGS", "sneak,shyhide,auto2,shyT480,shyA2,ev,rush,rushT60,Phurt0.5").split(",") if x)  # strategy switches (env MR_FLAGS overrides; dev only)
 WANT_KINDS = ("laser", "lightning")
 UPGRADE_PRIORITY = [
     "plating", "armor", "nanites", "laser_damage", "lightning_efficiency", "gun_rate",
@@ -398,6 +398,13 @@ class Bot:
 
     def _fp(self, prefix, default):
         """Numeric strategy knob from a flag like 'shyT90' (flags come from MR_FLAGS or the league spec)."""
+        if not self.ffa:  # practice-only overrides: 'Phurt0.5' applies until a free-for-all is detected
+            for f in self.flags:
+                if f.startswith("P" + prefix):
+                    try:
+                        return float(f[len(prefix) + 1:])
+                    except ValueError:
+                        pass
         for f in self.flags:
             if f.startswith(prefix):
                 try:
