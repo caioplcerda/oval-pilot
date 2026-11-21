@@ -26,6 +26,11 @@ UPGRADE_PRIORITY = [
     "gun_mag", "sensors", "gun_velocity", "servos", "jets", "lightning_chain", "laser_pierce",
     "mortar_reload", "mortar_velocity", "mortar_splash",
 ]
+UPGRADE_OFFENSE = [
+    "laser_damage", "gun_rate", "gun_damage", "lightning_efficiency", "laser_charge", "plating", "armor",
+    "nanites", "gyros", "lightning_range", "capacitor", "reactor", "gun_mag", "sensors", "gun_velocity",
+    "servos", "jets", "lightning_chain", "laser_pierce", "mortar_reload", "mortar_velocity", "mortar_splash",
+]
 SOUND_THREAT = {"gun", "laser", "laser_charge", "lightning", "mortar", "step", "boost", "jet", "reload"}
 
 
@@ -409,9 +414,10 @@ class Bot:
 
     def _upgrade_pick(self, offer):
         best, best_rank = 0, 1e9
+        prio = UPGRADE_OFFENSE if ("upoff" in self.flags and not self.ffa) else UPGRADE_PRIORITY
         for i, ch in enumerate(offer["choices"]):
             cid = ch.get("id", "")
-            rank = UPGRADE_PRIORITY.index(cid) if cid in UPGRADE_PRIORITY else 50
+            rank = prio.index(cid) if cid in prio else 50
             if rank < best_rank:
                 best, best_rank = i, rank
         return best
@@ -761,6 +767,8 @@ class Bot:
             d = math.dist(p["pos"][:2], pos[:2])
             if d > (self._fp("pickR", 240) if not (has_laser or has_light) else 160) or not self._safe_point(zs, p["pos"]) and d > 30:
                 continue
+            if "zapfirst" in self.flags and t < self._fp("rushT", 45) and p["kind"] == "lightning":
+                d -= 60  # self-aiming weapon first: best answer to an early hunter
             if want_pick is None or d < want_pick[1]:
                 want_pick = (p, d)
         if want_pick and want_pick[1] < self.reach - 0.3 and abs(want_pick[0]["pos"][2] - z) < 3.8:
@@ -828,7 +836,8 @@ class Bot:
         # secondary targets for cubes (crates / NPCs) when no enemy can be shot
         farm = None
         early = "econ" in self.flags and t < self.econ_t
-        if (target is None or not target["shoot"]) and not late:
+        nofarm = "nofarm" in self.flags and not self.ffa and t < self._fp("farmT", 60)
+        if (target is None or not target["shoot"]) and not late and not nofarm:
             cands = []
             for c in obs["crates"]:
                 d = math.dist(c["pos"][:2], pos[:2])
@@ -967,8 +976,15 @@ class Bot:
         close_fight = (target is not None and target["shoot"] and target["d"] < 40 and (has_light or hp_frac > 0.5)) \
             or finishing
 
+        rushing = ("rush" in self.flags and not self.ffa and t < self._fp("rushT", 45) and want_pick is not None
+                   and not (has_laser or has_light) and not zs["urgent"])
+        if rushing and target is not None and t - self.attackers.get(target["m"]["id"], -99.0) < 3.0 \
+                and target["d"] < self._fp("rushD", 40):
+            rushing = False  # someone is on top of us: fight back
         if zs["urgent"]:
             mode = "zone"
+        elif rushing:
+            mode = "loot"
         elif (self.retreating or many or outranged or (hide and not zs["must_go"])) and not close_fight:
             mode = "cover"
         elif zs["must_go"]:
@@ -983,6 +999,9 @@ class Bot:
             mode = "loot"  # arm up before taking fights with the gun alone
         elif target and target["shoot"]:
             mode = "fight"
+        elif "camp" in self.flags and not self.ffa and (has_laser or has_light) and not threats \
+                and t < self._fp("campT", 480) and hp_frac > 0.5:
+            mode = "hold"  # ambush: stand still (silent), aimed at the last noise
         elif want_pick:
             mode = "loot"
         else:
@@ -1085,7 +1104,9 @@ class Bot:
                 if mode == "loot" and gd_final < 14 and want_pick[0]["pos"][2] > z + 1.5 and me["energy"] > 20:
                     self.climb_until = max(self.climb_until, t + 0.6)
                 # hurry to far loot / cubes when nobody is close (boost drains energy, which regenerates)
-                if mode in ("loot", "cube") and gd_final > 30 and not any(e["d"] < 80 for e in real_threats):
+                if rushing and me["energy"] > 15:
+                    boost = True
+                elif mode in ("loot", "cube") and gd_final > 30 and not any(e["d"] < 80 for e in real_threats):
                     if self.boosting and me["energy"] > 22 or me["energy"] > 60:
                         boost = True
                         self.boosting = True
