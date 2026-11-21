@@ -518,7 +518,8 @@ class Bot:
             if along <= 0:
                 continue
             cross = dx * ry - dy * rx
-            if abs(cross) > 7.0 + 0.03 * along:
+            wide = "ldodge" in self.flags
+            if abs(cross) > (self._fp("ldW", 11.0) + 0.05 * along if wide else 7.0 + 0.03 * along):
                 continue
             side = self.dodge_side.get(m["id"])
             if side is None:
@@ -526,8 +527,8 @@ class Bot:
                 self.dodge_side[m["id"]] = side
             ax += -dy * side
             ay += dx * side
-            strength = max(strength, 0.9)
-            boost = boost or me["energy"] > 30
+            strength = max(strength, 1.0 if wide else 0.9)
+            boost = boost or me["energy"] > (15 if wide else 30)
         for k in list(self.dodge_side):
             if not any(e["m"]["id"] == k and e["m"].get("charging") for e in enemies):
                 del self.dodge_side[k]
@@ -998,8 +999,13 @@ class Bot:
         if rushing and target is not None and t - self.attackers.get(target["m"]["id"], -99.0) < 3.0 \
                 and target["d"] < self._fp("rushD", 40):
             rushing = False  # someone is on top of us: fight back
+        losbreak = ("losbreak" in self.flags and not self.ffa and not (has_laser or has_light) and real_threats
+                    and t < self._fp("lbT", 90) and not (want_pick and want_pick[1] < self._fp("lbP", 25))
+                    and not (target and target["d"] < 30))
         if zs["urgent"]:
             mode = "zone"
+        elif losbreak:
+            mode = "cover"  # unarmed vs a hunter: get out of its sight first, arm second
         elif rushing:
             mode = "loot"
         elif (self.retreating or many or outranged or (hide and not zs["must_go"])) and not close_fight:
