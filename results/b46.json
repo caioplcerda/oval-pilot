@@ -1,0 +1,15 @@
+[
+ {
+  "name": "b46",
+  "mode": "league",
+  "matches": 440,
+  "seed0": 3100000,
+  "min_n": 110,
+  "entries": [
+   "cur=proc:/tmp:env GPFFA=FightBoost=40,DodgeBoost=25,ThreatBoost=30,SpeedUp=true /tmp/claude-gy2=4",
+   "fb30=proc:/tmp:env GPFFA=FightBoost=30,DodgeBoost=25,ThreatBoost=30,SpeedUp=true /tmp/claude-gy2=4",
+   "db15=proc:/tmp:env GPFFA=FightBoost=40,DodgeBoost=15,ThreatBoost=30,SpeedUp=true /tmp/claude-gy2=4",
+   "tb20=proc:/tmp:env GPFFA=FightBoost=40,DodgeBoost=25,ThreatBoost=20,SpeedUp=true /tmp/claude-gy2=4"
+  ]
+ }
+]
