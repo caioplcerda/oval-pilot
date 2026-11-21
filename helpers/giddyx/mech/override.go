@@ -4,6 +4,7 @@ package mech
 // GPFFA="Vulture=0.4,Odds=0.7,Ghost=false" sets Params fields by name once a free-for-all is confirmed.
 
 import (
+	"math"
 	"os"
 	"reflect"
 	"strconv"
@@ -47,4 +48,27 @@ func applyOverrides(p Params, ovs []override) Params {
 		}
 	}
 	return p
+}
+
+// Structural free-for-all ideas (oval-pilot): GPX="third,truel".
+var ffaX = os.Getenv("GPX")
+
+func xOn(name string) bool { return strings.Contains(","+ffaX+",", ","+name+",") }
+
+// busyWithOther: t is aiming at another tracked mech within 160 m (fighting someone else, not us).
+func (b *Brain) busyWithOther(t *Track, now float64, x, y float64) bool {
+	toMe := math.Atan2(y-t.Pos[1], x-t.Pos[0])
+	if math.Abs(angDiff(t.Aim[0], toMe)) < 0.4 {
+		return false
+	}
+	for _, u := range b.tracks {
+		if u.ID == t.ID || now-u.Seen > 2.5 {
+			continue
+		}
+		br := math.Atan2(u.Pos[1]-t.Pos[1], u.Pos[0]-t.Pos[0])
+		if math.Abs(angDiff(t.Aim[0], br)) < 0.25 && hyp(u.Pos[0]-t.Pos[0], u.Pos[1]-t.Pos[1]) < 160 {
+			return true
+		}
+	}
+	return false
 }

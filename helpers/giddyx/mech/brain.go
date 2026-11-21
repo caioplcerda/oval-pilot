@@ -575,6 +575,14 @@ func (b *Brain) step(o *Obs, act *Action) {
 		case aimed && t.Dist < 190:
 			t.Engage = true
 		}
+		if b.notPractice && ffaX != "" {
+			if xOn("third") && !t.Engage && t.LOS && hpFrac > 0.6 && t.Dist < 200 && t.HP < 0.7*t.MaxHP && b.busyWithOther(t, now, x, y) {
+				t.Engage = true
+			}
+			if xOn("truel") && o.Alive == 3 && now-t.HitMe >= 4 && t.Dist >= 25 {
+				t.Engage = false
+			}
+		}
 		if t.Engage && !t.LOS && t.Dist < maxT && (hidden == nil || t.Dist < hidden.Dist) {
 			hidden = t
 		}
