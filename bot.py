@@ -333,7 +333,8 @@ class Bot:
         cfg = hello["config"]
         self.cfg = cfg
         self.me_id = hello.get("slot", -1)
-        self.rng = random.Random(hello.get("seed", 0))
+        salt = next((int(f[4:]) for f in FLAGS if f.startswith("salt") and f[4:].isdigit()), 0)
+        self.rng = random.Random(hello.get("seed", 0) + 7919 * salt)  # salt re-rolls tie-breaks, same policy
         self.world = World(hello.get("map", {}).get("dir", "/arena"))
         self.reach = cfg["loot"]["pickup_radius"]
         self.vision = cfg["vision"]
