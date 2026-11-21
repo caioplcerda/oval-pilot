@@ -1,4 +1,4 @@
-"""Hybrid controller: practice play from TTUN/r1ver's MIT bot, free-for-all play from our bot.
+"""Hybrid controller: practice play from a helper bot (MR_HELPER, default TTUN/r1ver), free-for-all play from our bot.
 
 Every observation goes to both controllers. Until our bot proves a free-for-all (other mechs dying
 early without us), the TTUN action is sent; afterwards our own action is sent and TTUN is stopped.
@@ -36,7 +36,10 @@ class Hybrid:
         try:
             env = dict(os.environ, HOME="/tmp", BUN_INSTALL_CACHE_DIR="/tmp/bun-cache",
                        BUN_RUNTIME_TRANSPILER_CACHE_PATH="0", TMPDIR="/tmp")
-            self.proc = subprocess.Popen([BUN, os.path.join(TTUN_DIR, "bot.ts")], cwd=TTUN_DIR,
+            helper = os.environ.get("MR_HELPER", "")
+            cmd = helper.split() if helper else [BUN, os.path.join(TTUN_DIR, "bot.ts")]
+            env["GOMAXPROCS"] = "1"
+            self.proc = subprocess.Popen(cmd, cwd=HERE if helper else TTUN_DIR,
                                          stdin=subprocess.PIPE, stdout=subprocess.PIPE,
                                          stderr=subprocess.DEVNULL, env=env, bufsize=0)
             h = dict(hello)
