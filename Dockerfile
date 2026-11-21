@@ -16,5 +16,5 @@ WORKDIR /bot
 COPY mechfight.py bot.py hybrid.py ./
 COPY ttun/ ./ttun/
 COPY helpers/giddyy/LICENSE ./helpers/giddyy/
-ENV MR_TTUN=11350d3 MR_HELPER=/usr/local/bin/mechbot MR_NOSWITCH=1 GPFFA=FightBoost=30,DodgeBoost=15,ThreatBoost=20,SpeedUp=true GPSQ=LowBonus=400,Stick=260 MR_TTUN_SALT=7
+ENV MR_TTUN=11350d3 MR_HELPER=/usr/local/bin/mechbot MR_NOSWITCH=1 GPFFA=FightBoost=30,DodgeBoost=15,ThreatBoost=20,SpeedUp=true GPSQ=Finish=26 MR_TTUN_SALT=7
 ENTRYPOINT ["python3", "-u", "/bot/hybrid.py"]
