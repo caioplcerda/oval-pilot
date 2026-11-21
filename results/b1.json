@@ -1,0 +1,7 @@
+[
+ {"name":"ffa_auto","mode":"league","matches":330,"entries":["base=bot:bot.py?sneak=4","s150h=bot:bot.py?sneak,shyT150,shyhide=4","auto30=bot:bot.py?sneak,shyT150,shyhide,auto,autoT30=4","auto15=bot:bot.py?sneak,shyT150,shyhide,auto,autoT15=4"]},
+ {"name":"ffa_shyT","mode":"league","matches":330,"entries":["s150h=bot:bot.py?sneak,shyT150,shyhide=4","s240h=bot:bot.py?sneak,shyT240,shyhide=4","s150hD50=bot:bot.py?sneak,shyT150,shyhide,shyD50=4","s480A4=bot:bot.py?sneak,shyT480,shyhide,shyA4=4"]},
+ {"name":"pr_base","mode":"practice","matches":660,"flags":"sneak"},
+ {"name":"pr_auto30","mode":"practice","matches":660,"flags":"sneak,shyT150,shyhide,auto,autoT30"},
+ {"name":"pr_auto15","mode":"practice","matches":660,"flags":"sneak,shyT150,shyhide,auto,autoT15"}
+]

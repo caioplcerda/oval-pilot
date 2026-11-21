@@ -379,6 +379,21 @@ class Bot:
         self.dodge_side = {}     # enemy id -> +1/-1 side we sidestep to
         self.last_kill_t = -99.0
         self.mortar_g = cfg["weapons"]["mortar"].get("gravity", 22.0)
+        self.kills = 0
+        self.ffa = False
+        self.late_r = float(os.environ.get("MR_LATE_R", "25"))   # endgame starts when the next circle is this small
+        self.late_d = float(os.environ.get("MR_LATE_D", "40"))   # ...and we still fight anything closer than this
+        self.econ_t = float(os.environ.get("MR_ECON_T", "110"))  # opening economy window (s)
+
+    def _fp(self, prefix, default):
+        """Numeric strategy knob from a flag like 'shyT90' (flags come from MR_FLAGS or the league spec)."""
+        for f in self.flags:
+            if f.startswith(prefix):
+                try:
+                    return float(f[len(prefix):])
+                except ValueError:
+                    pass
+        return default
 
     def _late(self, ms):
         """True once this decision has used more than `ms` milliseconds (hard budget is 50)."""
@@ -681,6 +696,7 @@ class Bot:
                 self.dmg_log.append((t, e.get("amount", 0), e["by"], e.get("bearing"), bool(e.get("rear"))))
             elif e["type"] == "kill":
                 self.last_kill_t = t
+                self.kills += 1
             elif e["type"] in ("took", "take_failed"):
                 self.known_picks.pop(e.get("id"), None)
         self.dmg_log = [d for d in self.dmg_log if t - d[0] < 2.5]
@@ -778,6 +794,30 @@ class Bot:
                 best, target = s, e
         self.target_id = target["m"]["id"] if target else None
         hide = False
+        # endgame: the last places go to whoever has the most HP when the zone closes; dealing damage
+        # resets regen, so only fight what is already fighting us, is in our face or is nearly dead
+        late = "endgame" in self.flags and zs["nr"] <= self.late_r
+        late_only = late
+        # shy opening: most free-for-all deaths happen in the first minute; stay out of fights we did not start
+        # practice house bots only die to us (or rarely NPCs/zone); in a free-for-all others die early
+        if 16 - obs["alive"] - self.kills >= self._fp("ffaN", 1):
+            self.ffa = True
+        shy = self._fp("shyT", 0) > t and obs["alive"] > self._fp("shyA", 0)
+        if "auto" in self.flags and not self.ffa and t >= self._fp("autoT", 30):
+            shy = False  # nobody died without us by now: practice squad, play to kill
+        if shy and target is not None:
+            m_ = target["m"]
+            if not (t - self.attackers.get(m_["id"], -99.0) < 4.0 or target["d"] < self._fp("shyD", 35)
+                    or m_["hp"] <= 0.25 * m_["max_hp"]):
+                target = None
+                hide = "shyhide" in self.flags
+                self.hide_until = t + 2.0
+        late = late or shy
+        if late and target is not None:
+            m_ = target["m"]
+            if not (t - self.attackers.get(m_["id"], -99.0) < 5.0 or target["d"] < self.late_d
+                    or m_["hp"] <= 0.3 * m_["max_hp"] or obs["alive"] <= 2):
+                target = None
         if "patient" in self.flags and target is not None and not self._engage_ok(obs, me, target, t):
             hide = True
             target = None
@@ -785,16 +825,17 @@ class Bot:
 
         # secondary targets for cubes (crates / NPCs) when no enemy can be shot
         farm = None
-        if target is None or not target["shoot"]:
+        early = "econ" in self.flags and t < self.econ_t
+        if (target is None or not target["shoot"]) and not late:
             cands = []
             for c in obs["crates"]:
                 d = math.dist(c["pos"][:2], pos[:2])
-                if d < 150 and c["pos"][2] < z + 6:
+                if d < (220 if early else 150) and c["pos"][2] < z + 6:
                     cands.append((d, "crate", c, (c["pos"][0], c["pos"][1], c["pos"][2] + 1.2)))
-            if hp_frac > 0.55:
+            if hp_frac > (0.4 if early else 0.55):
                 for n in npcs:
                     d = math.dist(n["pos"][:2], pos[:2])
-                    if d < 140:
+                    if d < (220 if early else 140):
                         cands.append((d + 30, "npc", n, (n["pos"][0], n["pos"][1], n["pos"][2] + 1.75)))
             cands.sort(key=lambda c: c[0])
             for c in cands[:4]:
