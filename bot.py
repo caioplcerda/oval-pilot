@@ -18,7 +18,7 @@ from array import array
 import mechfight as mf
 
 TAU = 2 * math.pi
-FLAGS = set(x for x in os.environ.get("MR_FLAGS", "sneak,shyhide,auto2,shyT480,shyA2,ev,rush,rushT60,salt3").split(",") if x)  # strategy switches (env MR_FLAGS overrides; dev only)
+FLAGS = set(x for x in os.environ.get("MR_FLAGS", "sneak,shyhide,auto2,shyT480,shyA2,ev,rush,rushT60,econ").split(",") if x)  # strategy switches (env MR_FLAGS overrides; dev only)
 WANT_KINDS = ("laser", "lightning")
 UPGRADE_PRIORITY = [
     "plating", "armor", "nanites", "laser_damage", "lightning_efficiency", "gun_rate",
@@ -995,8 +995,10 @@ class Bot:
         close_fight = (target is not None and target["shoot"] and target["d"] < 40 and (has_light or hp_frac > 0.5)) \
             or finishing
 
-        rushing = ("rush" in self.flags and not self.ffa and t < self._fp("rushT", 45) and want_pick is not None
-                   and not (has_laser or has_light) and not zs["urgent"])
+        armed_enough = (has_laser and has_light) if ("rush2" in self.flags and t < self._fp("rush2T", 90)) \
+            else (has_laser or has_light)
+        rushing = ("rush" in self.flags and not self.ffa and t < max(self._fp("rushT", 45), self._fp("rush2T", 0))
+                   and want_pick is not None and not armed_enough and not zs["urgent"])
         if rushing and target is not None and t - self.attackers.get(target["m"]["id"], -99.0) < 3.0 \
                 and target["d"] < self._fp("rushD", 40):
             rushing = False  # someone is on top of us: fight back
