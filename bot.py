@@ -849,6 +849,12 @@ class Bot:
                 target = None
                 hide = "shyhide" in self.flags
                 self.hide_until = t + 2.0
+        # practice: heal up before starting the next fight (the next hunter is sent right after each kill)
+        if "Pregen" in self.flags and not self.ffa and target is not None and hp_frac < self._fp("regenF", 0.85) \
+                and t - self.attackers.get(target["m"]["id"], -99.0) > 4.0 and target["d"] > self._fp("regenD", 45):
+            target = None
+            hide = True
+            self.hide_until = t + 1.0
         late_filter = late_only or (shy and not ("ev" in self.flags and self.ffa))
         late = late or shy
         if late_filter and target is not None:
