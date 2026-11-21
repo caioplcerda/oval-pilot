@@ -75,3 +75,48 @@ func (b *Brain) busyWithOther(t *Track, now float64, x, y float64) bool {
 
 // Practice (squad) overrides: GPSQ="FightBoost=40,..." applied on top of squadParams while practice mode is on.
 var squadOverrides = parseOverrides(os.Getenv("GPSQ"))
+
+// HomeExpoCost is the original exposure term (kept separate so homeCostX can reuse it).
+func (b *Brain) HomeExpoCost(px, py float64) float64 { return b.P.HomeExpo * b.W.Exposure(px, py) }
+
+// homeCostX: minimum-risk home choice with oval-pilot switches (GPX): notclose, farcrowd, edge.
+func (b *Brain) homeCostX(o *Obs, px, py, edge float64) float64 {
+	rad, w := 80.0, 40.0
+	if xOn("farcrowd") {
+		rad, w = 130, 80
+	}
+	crowd := 0.0
+	for _, t := range b.tracks {
+		if b.now-t.Seen < 20 {
+			crowd += math.Max(0, rad-hyp(t.Pos[0]-px, t.Pos[1]-py)) / rad
+		}
+	}
+	for i := range o.Drops {
+		crowd += math.Max(0, 60-hyp(o.Drops[i].Pos[0]-px, o.Drops[i].Pos[1]-py)) / 60
+	}
+	c := b.HomeExpoCost(px, py) + 0.25*hyp(px-o.Self.Pos[0], py-o.Self.Pos[1]) + w*crowd
+	if xOn("edge") {
+		c -= 10 * edge
+	} else {
+		c += 10 * edge
+	}
+	if xOn("notclose") {
+		for _, t := range b.tracks {
+			if b.now-t.Seen > 20 {
+				continue
+			}
+			dMe := hyp(t.Pos[0]-px, t.Pos[1]-py)
+			closest := true
+			for _, u := range b.tracks {
+				if u.ID != t.ID && b.now-u.Seen < 20 && hyp(t.Pos[0]-u.Pos[0], t.Pos[1]-u.Pos[1]) < dMe {
+					closest = false
+					break
+				}
+			}
+			if closest && dMe < 220 {
+				c += 50
+			}
+		}
+	}
+	return c
+}
