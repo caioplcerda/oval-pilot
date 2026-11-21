@@ -1,0 +1,12 @@
+[
+ {
+  "name": "b50",
+  "mode": "league",
+  "matches": 220,
+  "seed0": 3500000,
+  "entries": [
+   "ungated=proc:/tmp:env GPFFA=FightBoost=30,DodgeBoost=15,ThreatBoost=20,SpeedUp=true /tmp/claude-gy3=8",
+   "gated=proc:/tmp:env GPFFA=FightBoost=30,DodgeBoost=15,ThreatBoost=20,SpeedUp=true /tmp/claude-gy4=8"
+  ]
+ }
+]
