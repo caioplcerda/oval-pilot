@@ -1,0 +1,112 @@
+[
+ {
+  "name": "sf0",
+  "mode": "league",
+  "matches": 60,
+  "seed0": 60000,
+  "entries": [
+   "v0=bot:bot.py?sneak=1",
+   "v1=bot:bot.py?sneak,shyhide,auto2,shyT480,shyA6=2",
+   "evh=bot:bot.py?sneak,shyhide,auto2,shyT480,shyA2,ev,hide2,vult=2",
+   "ev=bot:bot.py?sneak,shyhide,auto2,shyT480,shyA2,ev=1",
+   "o0=proc:/Users/caiolacerda/mech/research/opps/Britogus7_Mech-Royale:bot.py=1",
+   "o1=proc:/Users/caiolacerda/mech/research/opps/Warrior-hound_mech-royale:bot.py=1",
+   "o2=proc:/Users/caiolacerda/mech/research/opps/atharvatripathi2026_gtgoats_mech_royale:bot.py=1",
+   "o3=proc:/Users/caiolacerda/mech/research/opps/jmonked_monked-mech-royale:example_bot.py=1",
+   "o4=proc:/Users/caiolacerda/mech/research/opps/JosiahAklog_nexus-mech-royale:bot.py=1",
+   "o5=proc:/Users/caiolacerda/mech/research/opps/Hassene26_mech-royale-bot:main.py=1",
+   "o6=proc:/Users/caiolacerda/mech/research/opps/bhattyuvraj22_mechfight-bot:bot.py=1",
+   "o7=proc:/Users/caiolacerda/mech/research/opps/VivekRnx_bob-the-builder-2026:bot.py=1",
+   "o8=proc:/Users/caiolacerda/mech/research/opps/praggybhat_mech-royale-bot:bot.py=1",
+   "o9=proc:/Users/caiolacerda/mech/research/opps/alex-vizn_mech-royale-bot:bot.py=1"
+  ]
+ },
+ {
+  "name": "sf1",
+  "mode": "league",
+  "matches": 60,
+  "seed0": 61000,
+  "entries": [
+   "v0=bot:bot.py?sneak=1",
+   "v1=bot:bot.py?sneak,shyhide,auto2,shyT480,shyA6=2",
+   "evh=bot:bot.py?sneak,shyhide,auto2,shyT480,shyA2,ev,hide2,vult=2",
+   "ev=bot:bot.py?sneak,shyhide,auto2,shyT480,shyA2,ev=1",
+   "o0=proc:/Users/caiolacerda/mech/research/opps/Britogus7_Mech-Royale:bot.py=1",
+   "o1=proc:/Users/caiolacerda/mech/research/opps/Warrior-hound_mech-royale:bot.py=1",
+   "o2=proc:/Users/caiolacerda/mech/research/opps/atharvatripathi2026_gtgoats_mech_royale:bot.py=1",
+   "o3=proc:/Users/caiolacerda/mech/research/opps/jmonked_monked-mech-royale:example_bot.py=1",
+   "o4=proc:/Users/caiolacerda/mech/research/opps/JosiahAklog_nexus-mech-royale:bot.py=1",
+   "o5=proc:/Users/caiolacerda/mech/research/opps/Hassene26_mech-royale-bot:main.py=1",
+   "o6=proc:/Users/caiolacerda/mech/research/opps/bhattyuvraj22_mechfight-bot:bot.py=1",
+   "o7=proc:/Users/caiolacerda/mech/research/opps/VivekRnx_bob-the-builder-2026:bot.py=1",
+   "o8=proc:/Users/caiolacerda/mech/research/opps/praggybhat_mech-royale-bot:bot.py=1",
+   "o9=proc:/Users/caiolacerda/mech/research/opps/alex-vizn_mech-royale-bot:bot.py=1"
+  ]
+ },
+ {
+  "name": "sf2",
+  "mode": "league",
+  "matches": 60,
+  "seed0": 62000,
+  "entries": [
+   "v0=bot:bot.py?sneak=1",
+   "v1=bot:bot.py?sneak,shyhide,auto2,shyT480,shyA6=2",
+   "evh=bot:bot.py?sneak,shyhide,auto2,shyT480,shyA2,ev,hide2,vult=2",
+   "ev=bot:bot.py?sneak,shyhide,auto2,shyT480,shyA2,ev=1",
+   "o0=proc:/Users/caiolacerda/mech/research/opps/Britogus7_Mech-Royale:bot.py=1",
+   "o1=proc:/Users/caiolacerda/mech/research/opps/Warrior-hound_mech-royale:bot.py=1",
+   "o2=proc:/Users/caiolacerda/mech/research/opps/atharvatripathi2026_gtgoats_mech_royale:bot.py=1",
+   "o3=proc:/Users/caiolacerda/mech/research/opps/jmonked_monked-mech-royale:example_bot.py=1",
+   "o4=proc:/Users/caiolacerda/mech/research/opps/JosiahAklog_nexus-mech-royale:bot.py=1",
+   "o5=proc:/Users/caiolacerda/mech/research/opps/Hassene26_mech-royale-bot:main.py=1",
+   "o6=proc:/Users/caiolacerda/mech/research/opps/bhattyuvraj22_mechfight-bot:bot.py=1",
+   "o7=proc:/Users/caiolacerda/mech/research/opps/VivekRnx_bob-the-builder-2026:bot.py=1",
+   "o8=proc:/Users/caiolacerda/mech/research/opps/praggybhat_mech-royale-bot:bot.py=1",
+   "o9=proc:/Users/caiolacerda/mech/research/opps/alex-vizn_mech-royale-bot:bot.py=1"
+  ]
+ },
+ {
+  "name": "sf3",
+  "mode": "league",
+  "matches": 60,
+  "seed0": 63000,
+  "entries": [
+   "v0=bot:bot.py?sneak=1",
+   "v1=bot:bot.py?sneak,shyhide,auto2,shyT480,shyA6=2",
+   "evh=bot:bot.py?sneak,shyhide,auto2,shyT480,shyA2,ev,hide2,vult=2",
+   "ev=bot:bot.py?sneak,shyhide,auto2,shyT480,shyA2,ev=1",
+   "o0=proc:/Users/caiolacerda/mech/research/opps/Britogus7_Mech-Royale:bot.py=1",
+   "o1=proc:/Users/caiolacerda/mech/research/opps/Warrior-hound_mech-royale:bot.py=1",
+   "o2=proc:/Users/caiolacerda/mech/research/opps/atharvatripathi2026_gtgoats_mech_royale:bot.py=1",
+   "o3=proc:/Users/caiolacerda/mech/research/opps/jmonked_monked-mech-royale:example_bot.py=1",
+   "o4=proc:/Users/caiolacerda/mech/research/opps/JosiahAklog_nexus-mech-royale:bot.py=1",
+   "o5=proc:/Users/caiolacerda/mech/research/opps/Hassene26_mech-royale-bot:main.py=1",
+   "o6=proc:/Users/caiolacerda/mech/research/opps/bhattyuvraj22_mechfight-bot:bot.py=1",
+   "o7=proc:/Users/caiolacerda/mech/research/opps/VivekRnx_bob-the-builder-2026:bot.py=1",
+   "o8=proc:/Users/caiolacerda/mech/research/opps/praggybhat_mech-royale-bot:bot.py=1",
+   "o9=proc:/Users/caiolacerda/mech/research/opps/alex-vizn_mech-royale-bot:bot.py=1"
+  ]
+ },
+ {
+  "name": "sf4",
+  "mode": "league",
+  "matches": 60,
+  "seed0": 64000,
+  "entries": [
+   "v0=bot:bot.py?sneak=1",
+   "v1=bot:bot.py?sneak,shyhide,auto2,shyT480,shyA6=2",
+   "evh=bot:bot.py?sneak,shyhide,auto2,shyT480,shyA2,ev,hide2,vult=2",
+   "ev=bot:bot.py?sneak,shyhide,auto2,shyT480,shyA2,ev=1",
+   "o0=proc:/Users/caiolacerda/mech/research/opps/Britogus7_Mech-Royale:bot.py=1",
+   "o1=proc:/Users/caiolacerda/mech/research/opps/Warrior-hound_mech-royale:bot.py=1",
+   "o2=proc:/Users/caiolacerda/mech/research/opps/atharvatripathi2026_gtgoats_mech_royale:bot.py=1",
+   "o3=proc:/Users/caiolacerda/mech/research/opps/jmonked_monked-mech-royale:example_bot.py=1",
+   "o4=proc:/Users/caiolacerda/mech/research/opps/JosiahAklog_nexus-mech-royale:bot.py=1",
+   "o5=proc:/Users/caiolacerda/mech/research/opps/Hassene26_mech-royale-bot:main.py=1",
+   "o6=proc:/Users/caiolacerda/mech/research/opps/bhattyuvraj22_mechfight-bot:bot.py=1",
+   "o7=proc:/Users/caiolacerda/mech/research/opps/VivekRnx_bob-the-builder-2026:bot.py=1",
+   "o8=proc:/Users/caiolacerda/mech/research/opps/praggybhat_mech-royale-bot:bot.py=1",
+   "o9=proc:/Users/caiolacerda/mech/research/opps/alex-vizn_mech-royale-bot:bot.py=1"
+  ]
+ }
+]

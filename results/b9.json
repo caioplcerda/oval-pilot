@@ -1,0 +1,72 @@
+[
+ {
+  "name": "pr_base",
+  "mode": "practice",
+  "matches": 660,
+  "seed0": 0,
+  "flags": "sneak,shyhide,auto2,shyT480,shyA6"
+ },
+ {
+  "name": "pr_rush",
+  "mode": "practice",
+  "matches": 660,
+  "seed0": 0,
+  "flags": "sneak,shyhide,auto2,shyT480,shyA6,rush"
+ },
+ {
+  "name": "pr_rush60",
+  "mode": "practice",
+  "matches": 660,
+  "seed0": 0,
+  "flags": "sneak,shyhide,auto2,shyT480,shyA6,rush,rushT60"
+ },
+ {
+  "name": "pr_rushD60",
+  "mode": "practice",
+  "matches": 660,
+  "seed0": 0,
+  "flags": "sneak,shyhide,auto2,shyT480,shyA6,rush,rushD60"
+ },
+ {
+  "name": "pr_zap",
+  "mode": "practice",
+  "matches": 660,
+  "seed0": 0,
+  "flags": "sneak,shyhide,auto2,shyT480,shyA6,zapfirst"
+ },
+ {
+  "name": "pr_rushzap",
+  "mode": "practice",
+  "matches": 660,
+  "seed0": 0,
+  "flags": "sneak,shyhide,auto2,shyT480,shyA6,rush,zapfirst"
+ },
+ {
+  "name": "pr_camp",
+  "mode": "practice",
+  "matches": 660,
+  "seed0": 0,
+  "flags": "sneak,shyhide,auto2,shyT480,shyA6,camp"
+ },
+ {
+  "name": "pr_camp120",
+  "mode": "practice",
+  "matches": 660,
+  "seed0": 0,
+  "flags": "sneak,shyhide,auto2,shyT480,shyA6,camp,campT120"
+ },
+ {
+  "name": "pr_rushcamp",
+  "mode": "practice",
+  "matches": 660,
+  "seed0": 0,
+  "flags": "sneak,shyhide,auto2,shyT480,shyA6,rush,camp"
+ },
+ {
+  "name": "pr_rushzapcamp",
+  "mode": "practice",
+  "matches": 660,
+  "seed0": 0,
+  "flags": "sneak,shyhide,auto2,shyT480,shyA6,rush,zapfirst,camp"
+ }
+]

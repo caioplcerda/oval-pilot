@@ -31,6 +31,7 @@ UPGRADE_OFFENSE = [
     "nanites", "gyros", "lightning_range", "capacitor", "reactor", "gun_mag", "sensors", "gun_velocity",
     "servos", "jets", "lightning_chain", "laser_pierce", "mortar_reload", "mortar_velocity", "mortar_splash",
 ]
+DIST_EST = {"near": 40.0, "mid": 110.0, "far": 260.0}
 SOUND_THREAT = {"gun", "laser", "laser_charge", "lightning", "mortar", "step", "boost", "jet", "reload"}
 
 
@@ -386,6 +387,10 @@ class Bot:
         self.mortar_g = cfg["weapons"]["mortar"].get("gravity", 22.0)
         self.kills = 0
         self.ffa = False
+        self.danger = []        # (t, (x, y), kind): where we heard shooting / deaths (minimum-risk hiding)
+        self.hide_pt = None
+        self.hide_calc_t = -99.0
+        self.shy_now = False
         self.late_r = float(os.environ.get("MR_LATE_R", "25"))   # endgame starts when the next circle is this small
         self.late_d = float(os.environ.get("MR_LATE_D", "40"))   # ...and we still fight anything closer than this
         self.econ_t = float(os.environ.get("MR_ECON_T", "110"))  # opening economy window (s)
@@ -710,6 +715,12 @@ class Bot:
         for s in obs["sounds"]:
             if s["kind"] in SOUND_THREAT and s["dist"] != "far":
                 self.last_sound = (t, s["bearing"])
+            if s["kind"] in SOUND_THREAT or s["kind"] in ("death", "explosion"):
+                rng_ = DIST_EST.get(s["dist"], 120.0)
+                b_ = s["bearing"]
+                self.danger.append((t - s.get("age", 0.0), (x + math.cos(b_) * rng_, y + math.sin(b_) * rng_), s["kind"]))
+        if len(self.danger) > 80 or (self.danger and t - self.danger[0][0] > 30):
+            self.danger = [d_ for d_ in self.danger[-80:] if t - d_[0] < 30]
 
         if obs["offer"]:
             act["pick"] = self._upgrade_pick(obs["offer"])
@@ -815,15 +826,21 @@ class Bot:
             shy = False  # play the practice game until a free-for-all is proven
         if "auto" in self.flags and not self.ffa and t >= self._fp("autoT", 30):
             shy = False  # nobody died without us by now: practice squad, play to kill
+        self.shy_now = shy
         if shy and target is not None:
             m_ = target["m"]
-            if not (t - self.attackers.get(m_["id"], -99.0) < 4.0 or target["d"] < self._fp("shyD", 35)
-                    or m_["hp"] <= 0.25 * m_["max_hp"]):
+            if "ev" in self.flags:
+                keep = self._ev_ok(obs, me, target, t, threats)
+            else:
+                keep = (t - self.attackers.get(m_["id"], -99.0) < 4.0 or target["d"] < self._fp("shyD", 35)
+                        or m_["hp"] <= 0.25 * m_["max_hp"])
+            if not keep:
                 target = None
                 hide = "shyhide" in self.flags
                 self.hide_until = t + 2.0
+        late_filter = late_only or (shy and "ev" not in self.flags)
         late = late or shy
-        if late and target is not None:
+        if late_filter and target is not None:
             m_ = target["m"]
             if not (t - self.attackers.get(m_["id"], -99.0) < 5.0 or target["d"] < self.late_d
                     or m_["hp"] <= 0.3 * m_["max_hp"] or obs["alive"] <= 2):
@@ -1066,6 +1083,19 @@ class Bot:
         if mode in ("roam", "fight") and goal is None or mode == "roam":
             goal = self._roam_goal(obs, pos, zs, farm, hp_frac, threats)
 
+        if self.ffa and self.shy_now and mode == "roam":
+            vg = self._vulture_goal(obs, pos, zs, hp_frac, t) if "vult" in self.flags else None
+            if vg is not None:
+                goal = vg
+            elif "hide2" in self.flags:
+                hp_ = self._hide_point(pos, zs, t)
+                if hp_ is not None:
+                    if math.dist(hp_, pos[:2]) < 8.0:
+                        mode, goal = "hold", None
+                        self.mode = mode
+                    else:
+                        goal = hp_
+
         # keep the goal inside the zone we are heading to
         if goal is not None and mode not in ("zone",) and zs["must_go"]:
             if math.dist(goal, zs["nc"]) > zs["nr"]:
@@ -1178,6 +1208,88 @@ class Bot:
         act["jump"] = jump
         self.dbg = {"pos": [round(x), round(y), round(z, 1)], "goal": [round(goal[0]), round(goal[1])] if goal else None, "mv": [round(move[0], 2), round(move[1], 2)], "vel": [round(me["vel"][0], 1), round(me["vel"][1], 1)], "en": round(me["energy"]), "clm": round(self.climb_until - t, 1), "thr": len(threats), "enm": len(enemies), "vis": [bool(e["vis"]) for e in enemies][:3], "outr": outranged, "many": many, "close": close_fight, "ret": self.retreating, "cov": self.cover_vis if self.cover else None}
         return act
+
+    # --- game-theory helpers ------------------------------------------------------------------
+    @staticmethod
+    def _dps_est(kinds, d, cubes):
+        """Rough sustained damage per second of a loadout at range d (hit rates folded in)."""
+        dps = 0.0
+        if "gun" in kinds and d < 230:
+            dps += 45 / 0.24 * 0.5 * max(0.3, 1.0 - d / 400.0)
+        if "laser" in kinds and d < 280:
+            dps += 315 / 2.4 * 0.65
+        if "lightning" in kinds and d < 45:
+            dps += 60 / 0.25 * 0.85
+        return dps * (1 + 0.04 * min(cubes, 10))
+
+    def _ev_ok(self, obs, me, target, t, threats):
+        """Fight only if the win chance beats the break-even p* = L / (L + G), where L is what dying now costs
+        (about (alive-1)*s more placements) and G what a kill is worth (a placement half the time + cubes)."""
+        m = target["m"]
+        if t - self.attackers.get(m["id"], -99.0) < 4.0:
+            return True  # already in the fight
+        d = target["d"]
+        x, y = me["pos"][0], me["pos"][1]
+        ours = self._dps_est([w["kind"] for w in me["weapons"] if w], d, me.get("cubes", 0)) + 1.0
+        theirs = self._dps_est(m.get("weapons") or ["gun"], d, m.get("cubes", 0)) + 1.0
+        off = abs(wrap(m["aim"][0] - math.atan2(y - m["pos"][1], x - m["pos"][0])))
+        if off > 0.6:
+            theirs *= 0.55  # looking elsewhere: they need to notice us and turn
+        if off > math.pi / 2:
+            ours *= 1.5     # their back: rear armor
+        ttk_them = max(1.0, m["hp"]) / ours
+        ttk_us = max(1.0, me["hp"]) / theirs
+        k = self._fp("evK", 2.5)
+        p = 1.0 / (1.0 + (ttk_them / ttk_us) ** k)
+        others = sum(1 for e in threats if not e.get("pseudo") and e["m"]["id"] != m["id"] and e["d"] < 160)
+        p *= 0.85 ** others
+        L = max(0.0, obs["alive"] - 1) * self._fp("evS", 0.55)
+        G = self._fp("evG", 0.8)
+        return p >= L / (L + G)
+
+    def _hide_point(self, pos, zs, t):
+        """Minimum-risk spot: inside the next circle, away from recent shooting, near walls, not too far."""
+        if t - self.hide_calc_t < 2.0 and self.hide_pt is not None:
+            return self.hide_pt
+        self.hide_calc_t = t
+        nc, nr = zs["nc"], zs["nr"]
+        if nr < 30:
+            self.hide_pt = None
+            return None
+        R = nr * self._fp("hideR", 0.55)
+        pts = [d_[1] for d_ in self.danger if t - d_[0] < 25]
+        w = self.world
+        best, bs = None, -1e18
+        for k in range(12):
+            a = k * TAU / 12
+            qx, qy = nc[0] + math.cos(a) * R, nc[1] + math.sin(a) * R
+            if self.nav is not None:
+                c = self.nav.nearest_free(self.nav.cell(qx, qy), 4)
+                if c is None:
+                    continue
+                qx, qy = self.nav.center(c)
+            if math.dist((qx, qy), zs["c"]) > zs["r"] - 20:
+                continue
+            dmin = min((math.dist((qx, qy), p_) for p_ in pts), default=300.0)
+            g = w.ground(qx, qy) if w.ok else pos[2]
+            walls = sum(1 for j in range(8) if w.blocked(qx + math.cos(j * TAU / 8) * 7, qy + math.sin(j * TAU / 8) * 7, g, 0.0))
+            sc = min(dmin, 300.0) - 0.25 * math.dist((qx, qy), pos[:2]) + 12.0 * min(walls, 4)
+            if sc > bs:
+                best, bs = (qx, qy), sc
+        self.hide_pt = best
+        return best
+
+    def _vulture_goal(self, obs, pos, zs, hp_frac, t):
+        """After a nearby death: its cubes are on the ground and the winner is hurt."""
+        if hp_frac < 0.7 or obs["alive"] <= 3:
+            return None
+        for d_ in reversed(self.danger):
+            if d_[2] == "death" and t - d_[0] < 8.0:
+                q = d_[1]
+                dd = math.dist(q, pos[:2])
+                if dd < self._fp("vultR", 130) and self._safe_point(zs, (q[0], q[1], 0.0)):
+                    return q
+        return None
 
     def _roam_goal(self, obs, pos, zs, farm, hp_frac, threats):
         x, y, z = pos
