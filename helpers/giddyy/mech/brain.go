@@ -52,6 +52,7 @@ type Brain struct {
 	strafe      float64
 	strafeUntil float64
 	boostLock   bool
+	ffaEarly    bool
 
 	retreat   bool
 	coverAt   float64
@@ -331,6 +332,9 @@ func (b *Brain) observe(o *Obs) {
 		b.otherDead = 0
 	}
 	if b.otherDead >= 5 {
+		if !b.notPractice && now < 100 {
+			b.ffaEarly = true // real free-for-alls lose mechs early; late practice zone deaths do not count
+		}
 		b.notPractice = true
 	}
 	if on := b.base.Practice && !b.notPractice && now > 20; on != b.pracOn {
@@ -350,7 +354,7 @@ func (b *Brain) observe(o *Obs) {
 		}
 	}
 
-	if b.notPractice && len(ffaOverrides) > 0 {
+	if b.ffaEarly && len(ffaOverrides) > 0 {
 		b.P = applyOverrides(b.P, ffaOverrides)
 	}
 	if b.pracOn && len(squadOverrides) > 0 {
