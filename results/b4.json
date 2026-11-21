@@ -1,0 +1,6 @@
+[
+ {"name":"ffa_v1a","mode":"league","matches":330,"entries":["v1=bot:bot.py?sneak,shyhide,auto2,shyT480,shyA6=4","end=bot:bot.py?sneak,shyhide,auto2,shyT480,shyA6,endgame=4","econ=bot:bot.py?sneak,shyhide,auto2,shyT480,shyA6,econ=4","A8=bot:bot.py?sneak,shyhide,auto2,shyT480,shyA8=4"]},
+ {"name":"ffa_v1b","mode":"league","matches":330,"entries":["v1=bot:bot.py?sneak,shyhide,auto2,shyT480,shyA6=4","D25=bot:bot.py?sneak,shyhide,auto2,shyT480,shyA6,shyD25=4","D50=bot:bot.py?sneak,shyhide,auto2,shyT480,shyA6,shyD50=4","pat=bot:bot.py?sneak,shyhide,auto2,shyT480,shyA6,patient=4"]},
+ {"name":"pr_econ","mode":"practice","matches":660,"flags":"sneak,shyhide,auto2,shyT480,shyA6,econ"},
+ {"name":"pr_end","mode":"practice","matches":660,"flags":"sneak,shyhide,auto2,shyT480,shyA6,endgame"}
+]

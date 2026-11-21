@@ -1,0 +1,98 @@
+[
+ {
+  "name": "pr_base",
+  "mode": "practice",
+  "matches": 550,
+  "flags": "sneak,shyhide,auto2,shyT480,shyA6"
+ },
+ {
+  "name": "pr_hurt30",
+  "mode": "practice",
+  "matches": 550,
+  "flags": "sneak,shyhide,auto2,shyT480,shyA6,hurt0.30"
+ },
+ {
+  "name": "pr_hurt50",
+  "mode": "practice",
+  "matches": 550,
+  "flags": "sneak,shyhide,auto2,shyT480,shyA6,hurt0.50"
+ },
+ {
+  "name": "pr_rexit95",
+  "mode": "practice",
+  "matches": 550,
+  "flags": "sneak,shyhide,auto2,shyT480,shyA6,rexit0.95"
+ },
+ {
+  "name": "pr_rexit65",
+  "mode": "practice",
+  "matches": 550,
+  "flags": "sneak,shyhide,auto2,shyT480,shyA6,rexit0.65"
+ },
+ {
+  "name": "pr_prefL80",
+  "mode": "practice",
+  "matches": 550,
+  "flags": "sneak,shyhide,auto2,shyT480,shyA6,prefL80"
+ },
+ {
+  "name": "pr_prefL150",
+  "mode": "practice",
+  "matches": 550,
+  "flags": "sneak,shyhide,auto2,shyT480,shyA6,prefL150"
+ },
+ {
+  "name": "pr_prefZ20",
+  "mode": "practice",
+  "matches": 550,
+  "flags": "sneak,shyhide,auto2,shyT480,shyA6,prefZ20"
+ },
+ {
+  "name": "pr_prefZ38",
+  "mode": "practice",
+  "matches": 550,
+  "flags": "sneak,shyhide,auto2,shyT480,shyA6,prefZ38"
+ },
+ {
+  "name": "pr_prefG60",
+  "mode": "practice",
+  "matches": 550,
+  "flags": "sneak,shyhide,auto2,shyT480,shyA6,prefG60"
+ },
+ {
+  "name": "pr_prefG120",
+  "mode": "practice",
+  "matches": 550,
+  "flags": "sneak,shyhide,auto2,shyT480,shyA6,prefG120"
+ },
+ {
+  "name": "pr_pickR320",
+  "mode": "practice",
+  "matches": 550,
+  "flags": "sneak,shyhide,auto2,shyT480,shyA6,pickR320"
+ },
+ {
+  "name": "pr_manyN2",
+  "mode": "practice",
+  "matches": 550,
+  "flags": "sneak,shyhide,auto2,shyT480,shyA6,manyN2"
+ },
+ {
+  "name": "pr_manyN4",
+  "mode": "practice",
+  "matches": 550,
+  "flags": "sneak,shyhide,auto2,shyT480,shyA6,manyN4"
+ },
+ {
+  "name": "pr_dpsin80",
+  "mode": "practice",
+  "matches": 550,
+  "flags": "sneak,shyhide,auto2,shyT480,shyA6,dpsin80"
+ },
+ {
+  "name": "pr_dpsin160",
+  "mode": "practice",
+  "matches": 550,
+  "flags": "sneak,shyhide,auto2,shyT480,shyA6,dpsin160"
+ }
+]

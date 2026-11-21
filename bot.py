@@ -759,7 +759,7 @@ class Bot:
             if abs(p["pos"][2] - z) > 25:
                 continue
             d = math.dist(p["pos"][:2], pos[:2])
-            if d > (240 if not (has_laser or has_light) else 160) or not self._safe_point(zs, p["pos"]) and d > 30:
+            if d > (self._fp("pickR", 240) if not (has_laser or has_light) else 160) or not self._safe_point(zs, p["pos"]) and d > 30:
                 continue
             if want_pick is None or d < want_pick[1]:
                 want_pick = (p, d)
@@ -958,12 +958,12 @@ class Bot:
         mode = "roam"
         boost = False
         outranged = any("laser" in e["m"].get("weapons", []) and e["d"] > 70 for e in threats) and not has_laser
-        hurt = hp_frac < 0.38
-        if self.retreating and (hp_frac > 0.8 or (t - self.last_dmg_t > 12 and hp_frac > 0.6)):
+        hurt = hp_frac < self._fp("hurt", 0.38)
+        if self.retreating and (hp_frac > self._fp("rexit", 0.8) or (t - self.last_dmg_t > 12 and hp_frac > 0.6)):
             self.retreating = False
         if hurt and threats:
             self.retreating = True
-        many = len(threats) >= 3 or (len(threats) >= 2 and hp_frac < 0.6) or dps_in > 110 or bool(hidden)
+        many = len(threats) >= self._fp("manyN", 3) or (len(threats) >= 2 and hp_frac < self._fp("many2", 0.6)) or dps_in > self._fp("dpsin", 110) or bool(hidden)
         close_fight = (target is not None and target["shoot"] and target["d"] < 40 and (has_light or hp_frac > 0.5)) \
             or finishing
 
@@ -1022,7 +1022,7 @@ class Bot:
             self.mode = mode
         if mode == "fight":
             d = target["d"]
-            pref = 110 if has_laser else (28 if has_light else 85)
+            pref = self._fp("prefL", 110) if has_laser else (self._fp("prefZ", 28) if has_light else self._fp("prefG", 85))
             if has_light and has_laser and d < 60:
                 pref = 28
             if finishing:
