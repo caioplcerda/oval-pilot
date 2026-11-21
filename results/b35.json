@@ -1,0 +1,102 @@
+[
+ {
+  "name": "sfQ0",
+  "mode": "league",
+  "matches": 60,
+  "seed0": 1700000,
+  "entries": [
+   "v2=bot:bot.py?sneak,shyhide,auto2,shyT480,shyA2,ev,rush,rushT60,jink=3",
+   "giddy=proc:/tmp:/tmp/claude-giddy=3",
+   "o0=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/Britogus7_Mech-Royale:bot.py=1",
+   "o1=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/Warrior-hound_mech-royale:bot.py=1",
+   "o2=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/atharvatripathi2026_gtgoats_mech_royale:bot.py=1",
+   "o3=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/jmonked_monked-mech-royale:example_bot.py=1",
+   "o4=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/JosiahAklog_nexus-mech-royale:bot.py=1",
+   "o5=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/Hassene26_mech-royale-bot:main.py=1",
+   "o6=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/bhattyuvraj22_mechfight-bot:bot.py=1",
+   "o7=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/VivekRnx_bob-the-builder-2026:bot.py=1",
+   "o8=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/praggybhat_mech-royale-bot:bot.py=1",
+   "o9=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/alex-vizn_mech-royale-bot:bot.py=1"
+  ]
+ },
+ {
+  "name": "sfQ1",
+  "mode": "league",
+  "matches": 60,
+  "seed0": 1701000,
+  "entries": [
+   "v2=bot:bot.py?sneak,shyhide,auto2,shyT480,shyA2,ev,rush,rushT60,jink=3",
+   "giddy=proc:/tmp:/tmp/claude-giddy=3",
+   "o0=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/Britogus7_Mech-Royale:bot.py=1",
+   "o1=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/Warrior-hound_mech-royale:bot.py=1",
+   "o2=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/atharvatripathi2026_gtgoats_mech_royale:bot.py=1",
+   "o3=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/jmonked_monked-mech-royale:example_bot.py=1",
+   "o4=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/JosiahAklog_nexus-mech-royale:bot.py=1",
+   "o5=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/Hassene26_mech-royale-bot:main.py=1",
+   "o6=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/bhattyuvraj22_mechfight-bot:bot.py=1",
+   "o7=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/VivekRnx_bob-the-builder-2026:bot.py=1",
+   "o8=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/praggybhat_mech-royale-bot:bot.py=1",
+   "o9=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/alex-vizn_mech-royale-bot:bot.py=1"
+  ]
+ },
+ {
+  "name": "sfQ2",
+  "mode": "league",
+  "matches": 60,
+  "seed0": 1702000,
+  "entries": [
+   "v2=bot:bot.py?sneak,shyhide,auto2,shyT480,shyA2,ev,rush,rushT60,jink=3",
+   "giddy=proc:/tmp:/tmp/claude-giddy=3",
+   "o0=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/Britogus7_Mech-Royale:bot.py=1",
+   "o1=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/Warrior-hound_mech-royale:bot.py=1",
+   "o2=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/atharvatripathi2026_gtgoats_mech_royale:bot.py=1",
+   "o3=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/jmonked_monked-mech-royale:example_bot.py=1",
+   "o4=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/JosiahAklog_nexus-mech-royale:bot.py=1",
+   "o5=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/Hassene26_mech-royale-bot:main.py=1",
+   "o6=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/bhattyuvraj22_mechfight-bot:bot.py=1",
+   "o7=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/VivekRnx_bob-the-builder-2026:bot.py=1",
+   "o8=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/praggybhat_mech-royale-bot:bot.py=1",
+   "o9=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/alex-vizn_mech-royale-bot:bot.py=1"
+  ]
+ },
+ {
+  "name": "sfQ3",
+  "mode": "league",
+  "matches": 60,
+  "seed0": 1703000,
+  "entries": [
+   "v2=bot:bot.py?sneak,shyhide,auto2,shyT480,shyA2,ev,rush,rushT60,jink=3",
+   "giddy=proc:/tmp:/tmp/claude-giddy=3",
+   "o0=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/Britogus7_Mech-Royale:bot.py=1",
+   "o1=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/Warrior-hound_mech-royale:bot.py=1",
+   "o2=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/atharvatripathi2026_gtgoats_mech_royale:bot.py=1",
+   "o3=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/jmonked_monked-mech-royale:example_bot.py=1",
+   "o4=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/JosiahAklog_nexus-mech-royale:bot.py=1",
+   "o5=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/Hassene26_mech-royale-bot:main.py=1",
+   "o6=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/bhattyuvraj22_mechfight-bot:bot.py=1",
+   "o7=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/VivekRnx_bob-the-builder-2026:bot.py=1",
+   "o8=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/praggybhat_mech-royale-bot:bot.py=1",
+   "o9=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/alex-vizn_mech-royale-bot:bot.py=1"
+  ]
+ },
+ {
+  "name": "sfQ4",
+  "mode": "league",
+  "matches": 60,
+  "seed0": 1704000,
+  "entries": [
+   "v2=bot:bot.py?sneak,shyhide,auto2,shyT480,shyA2,ev,rush,rushT60,jink=3",
+   "giddy=proc:/tmp:/tmp/claude-giddy=3",
+   "o0=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/Britogus7_Mech-Royale:bot.py=1",
+   "o1=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/Warrior-hound_mech-royale:bot.py=1",
+   "o2=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/atharvatripathi2026_gtgoats_mech_royale:bot.py=1",
+   "o3=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/jmonked_monked-mech-royale:example_bot.py=1",
+   "o4=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/JosiahAklog_nexus-mech-royale:bot.py=1",
+   "o5=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/Hassene26_mech-royale-bot:main.py=1",
+   "o6=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/bhattyuvraj22_mechfight-bot:bot.py=1",
+   "o7=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/VivekRnx_bob-the-builder-2026:bot.py=1",
+   "o8=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/praggybhat_mech-royale-bot:bot.py=1",
+   "o9=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/alex-vizn_mech-royale-bot:bot.py=1"
+  ]
+ }
+]
