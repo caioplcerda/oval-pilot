@@ -1,0 +1,62 @@
+[
+ {
+  "name": "b45_0",
+  "mode": "league",
+  "matches": 100,
+  "seed0": 3000000,
+  "entries": [
+   "orig=proc:/tmp:/tmp/claude-gy2=3",
+   "bs=proc:/tmp:env GPFFA=FightBoost=40,DodgeBoost=25,ThreatBoost=30,SpeedUp=true /tmp/claude-gy2=3",
+   "o0=proc:/Users/caiolacerda/mech/research/opps/Britogus7_Mech-Royale:bot.py=1",
+   "o1=proc:/Users/caiolacerda/mech/research/opps/Warrior-hound_mech-royale:bot.py=1",
+   "o2=proc:/Users/caiolacerda/mech/research/opps/atharvatripathi2026_gtgoats_mech_royale:bot.py=1",
+   "o3=proc:/Users/caiolacerda/mech/research/opps/jmonked_monked-mech-royale:example_bot.py=1",
+   "o4=proc:/Users/caiolacerda/mech/research/opps/JosiahAklog_nexus-mech-royale:bot.py=1",
+   "o5=proc:/Users/caiolacerda/mech/research/opps/Hassene26_mech-royale-bot:main.py=1",
+   "o6=proc:/Users/caiolacerda/mech/research/opps/bhattyuvraj22_mechfight-bot:bot.py=1",
+   "o7=proc:/Users/caiolacerda/mech/research/opps/VivekRnx_bob-the-builder-2026:bot.py=1",
+   "o8=proc:/Users/caiolacerda/mech/research/opps/praggybhat_mech-royale-bot:bot.py=1",
+   "o9=proc:/Users/caiolacerda/mech/research/opps/alex-vizn_mech-royale-bot:bot.py=1"
+  ]
+ },
+ {
+  "name": "b45_1",
+  "mode": "league",
+  "matches": 100,
+  "seed0": 3010000,
+  "entries": [
+   "orig=proc:/tmp:/tmp/claude-gy2=3",
+   "bs=proc:/tmp:env GPFFA=FightBoost=40,DodgeBoost=25,ThreatBoost=30,SpeedUp=true /tmp/claude-gy2=3",
+   "o0=proc:/Users/caiolacerda/mech/research/opps/Britogus7_Mech-Royale:bot.py=1",
+   "o1=proc:/Users/caiolacerda/mech/research/opps/Warrior-hound_mech-royale:bot.py=1",
+   "o2=proc:/Users/caiolacerda/mech/research/opps/atharvatripathi2026_gtgoats_mech_royale:bot.py=1",
+   "o3=proc:/Users/caiolacerda/mech/research/opps/jmonked_monked-mech-royale:example_bot.py=1",
+   "o4=proc:/Users/caiolacerda/mech/research/opps/JosiahAklog_nexus-mech-royale:bot.py=1",
+   "o5=proc:/Users/caiolacerda/mech/research/opps/Hassene26_mech-royale-bot:main.py=1",
+   "o6=proc:/Users/caiolacerda/mech/research/opps/bhattyuvraj22_mechfight-bot:bot.py=1",
+   "o7=proc:/Users/caiolacerda/mech/research/opps/VivekRnx_bob-the-builder-2026:bot.py=1",
+   "o8=proc:/Users/caiolacerda/mech/research/opps/praggybhat_mech-royale-bot:bot.py=1",
+   "o9=proc:/Users/caiolacerda/mech/research/opps/alex-vizn_mech-royale-bot:bot.py=1"
+  ]
+ },
+ {
+  "name": "b45_2",
+  "mode": "league",
+  "matches": 100,
+  "seed0": 3020000,
+  "entries": [
+   "orig=proc:/tmp:/tmp/claude-gy2=3",
+   "bs=proc:/tmp:env GPFFA=FightBoost=40,DodgeBoost=25,ThreatBoost=30,SpeedUp=true /tmp/claude-gy2=3",
+   "o0=proc:/Users/caiolacerda/mech/research/opps/Britogus7_Mech-Royale:bot.py=1",
+   "o1=proc:/Users/caiolacerda/mech/research/opps/Warrior-hound_mech-royale:bot.py=1",
+   "o2=proc:/Users/caiolacerda/mech/research/opps/atharvatripathi2026_gtgoats_mech_royale:bot.py=1",
+   "o3=proc:/Users/caiolacerda/mech/research/opps/jmonked_monked-mech-royale:example_bot.py=1",
+   "o4=proc:/Users/caiolacerda/mech/research/opps/JosiahAklog_nexus-mech-royale:bot.py=1",
+   "o5=proc:/Users/caiolacerda/mech/research/opps/Hassene26_mech-royale-bot:main.py=1",
+   "o6=proc:/Users/caiolacerda/mech/research/opps/bhattyuvraj22_mechfight-bot:bot.py=1",
+   "o7=proc:/Users/caiolacerda/mech/research/opps/VivekRnx_bob-the-builder-2026:bot.py=1",
+   "o8=proc:/Users/caiolacerda/mech/research/opps/praggybhat_mech-royale-bot:bot.py=1",
+   "o9=proc:/Users/caiolacerda/mech/research/opps/alex-vizn_mech-royale-bot:bot.py=1"
+  ]
+ }
+]

@@ -1,0 +1,16 @@
+[
+ {
+  "name": "b43",
+  "mode": "league",
+  "matches": 440,
+  "seed0": 2800000,
+  "min_n": 110,
+  "entries": [
+   "orig=proc:/tmp:/tmp/claude-gy2=4",
+   "notclose=proc:/tmp:env GPX=notclose /tmp/claude-gy2=3",
+   "farcrowd=proc:/tmp:env GPX=farcrowd /tmp/claude-gy2=3",
+   "edge=proc:/tmp:env GPX=edge /tmp/claude-gy2=3",
+   "nc_fc=proc:/tmp:env GPX=notclose,farcrowd /tmp/claude-gy2=3"
+  ]
+ }
+]

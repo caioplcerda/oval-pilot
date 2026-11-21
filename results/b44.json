@@ -1,0 +1,14 @@
+[
+ {
+  "name": "b44",
+  "mode": "league",
+  "matches": 550,
+  "seed0": 2900000,
+  "min_n": 165,
+  "entries": [
+   "orig=proc:/tmp:/tmp/claude-gy2=6",
+   "bs=proc:/tmp:env GPFFA=FightBoost=40,DodgeBoost=25,ThreatBoost=30,SpeedUp=true /tmp/claude-gy2=5",
+   "bse=proc:/tmp:env GPFFA=FightBoost=40,DodgeBoost=25,ThreatBoost=30,SpeedUp=true GPX=edge /tmp/claude-gy2=5"
+  ]
+ }
+]

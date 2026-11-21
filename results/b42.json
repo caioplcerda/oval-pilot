@@ -1,0 +1,14 @@
+[
+ {
+  "name": "b42",
+  "mode": "league",
+  "matches": 440,
+  "seed0": 2700000,
+  "min_n": 110,
+  "entries": [
+   "orig=proc:/tmp:/tmp/claude-gy=6",
+   "boost=proc:/tmp:env GPFFA=FightBoost=40,DodgeBoost=25,ThreatBoost=30 /tmp/claude-gy=5",
+   "boostspd=proc:/tmp:env GPFFA=FightBoost=40,DodgeBoost=25,ThreatBoost=30,SpeedUp=true /tmp/claude-gy=5"
+  ]
+ }
+]
