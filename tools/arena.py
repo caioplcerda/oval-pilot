@@ -691,7 +691,7 @@ class ProcBot:
         import subprocess
         h = dict(hello)
         h["map"] = {"dir": os.path.abspath(os.path.join(kit, "arena")), "files": ["v2/world.json", "v2/terrain.i16"]}
-        cmd = [sys.executable, "-u"] + entry.split()
+        cmd = ([sys.executable, "-u"] + entry.split()) if entry.split()[0].endswith(".py") else entry.split()
         self.p = subprocess.Popen(cmd, cwd=bot_dir, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
                                   stderr=subprocess.DEVNULL, text=True, bufsize=1)
         _PROCS.append(self.p)

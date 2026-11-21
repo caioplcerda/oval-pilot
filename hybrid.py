@@ -22,6 +22,7 @@ TTUN_DIR = os.path.join(HERE, "ttun", os.environ.get("MR_TTUN", "11350d3"))
 BUN = os.environ.get("MR_BUN", "bun")
 READY_TIMEOUT_S = 12.0
 ANSWER_BUDGET_S = 0.036   # leave room inside the 50 ms tick budget
+NOSWITCH = os.environ.get("MR_NOSWITCH", "") == "1"  # helper plays the whole match; ours is only the fallback
 
 
 class Hybrid:
@@ -92,14 +93,14 @@ class Hybrid:
         t0 = time.perf_counter()
         tick = obs["tick"]
         sent = False
-        if self.proc is not None and not self.inner.ffa:
+        if self.proc is not None and (NOSWITCH or not self.inner.ffa):
             try:
                 self._send(obs)  # TTUN thinks while we do
                 sent = True
             except Exception:
                 self._stop()
         mine = self.inner.act(obs)
-        if self.inner.ffa:
+        if self.inner.ffa and not NOSWITCH:
             self._stop()  # free-for-all proven: our game from here on
             return mine
         if not sent or self.proc is None:
