@@ -1,0 +1,13 @@
+[
+ {
+  "name": "mir_b25",
+  "mode": "league",
+  "matches": 550,
+  "seed0": 800000,
+  "entries": [
+   "v2=bot:bot.py?sneak,shyhide,auto2,shyT480,shyA2,ev,rush,rushT60=6",
+   "nohide=bot:bot.py?sneak,auto2,shyT480,shyA2,ev,rush,rushT60=5",
+   "A4=bot:bot.py?sneak,shyhide,auto2,shyT480,shyA4,ev,rush,rushT60=5"
+  ]
+ }
+]

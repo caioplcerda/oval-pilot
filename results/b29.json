@@ -1,0 +1,114 @@
+[
+ {
+  "name": "sq_best",
+  "mode": "practice",
+  "matches": 1100,
+  "seed0": 1100000,
+  "flags": "sneak,shyhide,auto2,shyT480,shyA2,ev,rush,rushT60,Phurt0.5,PmanyN5,PprefL160",
+  "simargs": [
+   "--squad",
+   "--noise",
+   "1.3",
+   "--lasers",
+   "12",
+   "--squad-late",
+   "200"
+  ]
+ },
+ {
+  "name": "sq_reg85",
+  "mode": "practice",
+  "matches": 1100,
+  "seed0": 1100000,
+  "flags": "sneak,shyhide,auto2,shyT480,shyA2,ev,rush,rushT60,Phurt0.5,PmanyN5,PprefL160,Pregen",
+  "simargs": [
+   "--squad",
+   "--noise",
+   "1.3",
+   "--lasers",
+   "12",
+   "--squad-late",
+   "200"
+  ]
+ },
+ {
+  "name": "sq_reg70",
+  "mode": "practice",
+  "matches": 1100,
+  "seed0": 1100000,
+  "flags": "sneak,shyhide,auto2,shyT480,shyA2,ev,rush,rushT60,Phurt0.5,PmanyN5,PprefL160,Pregen,regenF0.7",
+  "simargs": [
+   "--squad",
+   "--noise",
+   "1.3",
+   "--lasers",
+   "12",
+   "--squad-late",
+   "200"
+  ]
+ },
+ {
+  "name": "sq_reg95",
+  "mode": "practice",
+  "matches": 1100,
+  "seed0": 1100000,
+  "flags": "sneak,shyhide,auto2,shyT480,shyA2,ev,rush,rushT60,Phurt0.5,PmanyN5,PprefL160,Pregen,regenF0.95",
+  "simargs": [
+   "--squad",
+   "--noise",
+   "1.3",
+   "--lasers",
+   "12",
+   "--squad-late",
+   "200"
+  ]
+ },
+ {
+  "name": "sq_reg85D80",
+  "mode": "practice",
+  "matches": 1100,
+  "seed0": 1100000,
+  "flags": "sneak,shyhide,auto2,shyT480,shyA2,ev,rush,rushT60,Phurt0.5,PmanyN5,PprefL160,Pregen,regenD80",
+  "simargs": [
+   "--squad",
+   "--noise",
+   "1.3",
+   "--lasers",
+   "12",
+   "--squad-late",
+   "200"
+  ]
+ },
+ {
+  "name": "sq_jink",
+  "mode": "practice",
+  "matches": 1100,
+  "seed0": 1100000,
+  "flags": "sneak,shyhide,auto2,shyT480,shyA2,ev,rush,rushT60,Phurt0.5,PmanyN5,PprefL160,jink",
+  "simargs": [
+   "--squad",
+   "--noise",
+   "1.3",
+   "--lasers",
+   "12",
+   "--squad-late",
+   "200"
+  ]
+ },
+ {
+  "name": "sq_reg85j",
+  "mode": "practice",
+  "matches": 1100,
+  "seed0": 1100000,
+  "flags": "sneak,shyhide,auto2,shyT480,shyA2,ev,rush,rushT60,Phurt0.5,PmanyN5,PprefL160,Pregen,jink",
+  "simargs": [
+   "--squad",
+   "--noise",
+   "1.3",
+   "--lasers",
+   "12",
+   "--squad-late",
+   "200"
+  ]
+ }
+]

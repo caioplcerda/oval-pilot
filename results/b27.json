@@ -1,0 +1,98 @@
+[
+ {
+  "name": "sq_L190j",
+  "mode": "practice",
+  "matches": 1100,
+  "seed0": 950000,
+  "flags": "sneak,shyhide,auto2,shyT480,shyA2,ev,rush,rushT60,PmanyN5,jink,Phurt0.5,PprefL190",
+  "simargs": [
+   "--squad",
+   "--noise",
+   "1.3",
+   "--lasers",
+   "12",
+   "--squad-late",
+   "200"
+  ]
+ },
+ {
+  "name": "sq_L200j",
+  "mode": "practice",
+  "matches": 1100,
+  "seed0": 950000,
+  "flags": "sneak,shyhide,auto2,shyT480,shyA2,ev,rush,rushT60,PmanyN5,jink,Phurt0.5,PprefL200",
+  "simargs": [
+   "--squad",
+   "--noise",
+   "1.3",
+   "--lasers",
+   "12",
+   "--squad-late",
+   "200"
+  ]
+ },
+ {
+  "name": "sq_L190jG130",
+  "mode": "practice",
+  "matches": 1100,
+  "seed0": 950000,
+  "flags": "sneak,shyhide,auto2,shyT480,shyA2,ev,rush,rushT60,PmanyN5,jink,Phurt0.5,PprefL190,PprefG130",
+  "simargs": [
+   "--squad",
+   "--noise",
+   "1.3",
+   "--lasers",
+   "12",
+   "--squad-late",
+   "200"
+  ]
+ },
+ {
+  "name": "sq_L190jh4",
+  "mode": "practice",
+  "matches": 1100,
+  "seed0": 950000,
+  "flags": "sneak,shyhide,auto2,shyT480,shyA2,ev,rush,rushT60,PmanyN5,jink,Phurt0.4,PprefL190",
+  "simargs": [
+   "--squad",
+   "--noise",
+   "1.3",
+   "--lasers",
+   "12",
+   "--squad-late",
+   "200"
+  ]
+ },
+ {
+  "name": "sq_L190jh6",
+  "mode": "practice",
+  "matches": 1100,
+  "seed0": 950000,
+  "flags": "sneak,shyhide,auto2,shyT480,shyA2,ev,rush,rushT60,PmanyN5,jink,Phurt0.6,PprefL190",
+  "simargs": [
+   "--squad",
+   "--noise",
+   "1.3",
+   "--lasers",
+   "12",
+   "--squad-late",
+   "200"
+  ]
+ },
+ {
+  "name": "sq_L175j",
+  "mode": "practice",
+  "matches": 1100,
+  "seed0": 950000,
+  "flags": "sneak,shyhide,auto2,shyT480,shyA2,ev,rush,rushT60,PmanyN5,jink,Phurt0.5,PprefL175",
+  "simargs": [
+   "--squad",
+   "--noise",
+   "1.3",
+   "--lasers",
+   "12",
+   "--squad-late",
+   "200"
+  ]
+ }
+]

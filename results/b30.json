@@ -1,0 +1,44 @@
+[
+ {
+  "name": "sq_j",
+  "mode": "practice",
+  "matches": 1650,
+  "seed0": 1200000,
+  "flags": "sneak,shyhide,auto2,shyT480,shyA2,ev,rush,rushT60,Phurt0.5,PmanyN5,PprefL160,jink",
+  "simargs": [
+   "--squad",
+   "--noise",
+   "1.3",
+   "--lasers",
+   "12",
+   "--squad-late",
+   "200"
+  ]
+ },
+ {
+  "name": "sq_jlt",
+  "mode": "practice",
+  "matches": 1650,
+  "seed0": 1200000,
+  "flags": "sneak,shyhide,auto2,shyT480,shyA2,ev,rush,rushT60,Phurt0.5,PmanyN5,PprefL160,jink,laser_tight",
+  "simargs": [
+   "--squad",
+   "--noise",
+   "1.3",
+   "--lasers",
+   "12",
+   "--squad-late",
+   "200"
+  ]
+ },
+ {
+  "name": "mir_lt",
+  "mode": "league",
+  "matches": 330,
+  "seed0": 1210000,
+  "entries": [
+   "j=bot:bot.py?sneak,shyhide,auto2,shyT480,shyA2,ev,rush,rushT60,jink=8",
+   "jlt=bot:bot.py?sneak,shyhide,auto2,shyT480,shyA2,ev,rush,rushT60,jink,laser_tight=8"
+  ]
+ }
+]
