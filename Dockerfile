@@ -3,9 +3,9 @@
 FROM golang:1.26.1-bookworm@sha256:ab3d6955bbc813a0f3fdf220c1d817dd89c0b3f283777db8ece4a32fe7858edd AS gobuild
 WORKDIR /src
 ENV CGO_ENABLED=0 GOOS=linux GOARCH=amd64 GOTOOLCHAIN=local GOPROXY=off GOSUMDB=off GOTELEMETRY=off
-COPY helpers/kanya/go.mod ./
-COPY helpers/kanya/mech ./mech
-COPY helpers/kanya/cmd/bot ./cmd/bot
+COPY helpers/giddy70c8b23/go.mod ./
+COPY helpers/giddy70c8b23/mech ./mech
+COPY helpers/giddy70c8b23/cmd/bot ./cmd/bot
 RUN go build -mod=readonly -trimpath -buildvcs=false -ldflags="-s -w -buildid=" -o /mechbot ./cmd/bot
 
 FROM oven/bun:1.4.4-slim AS bun
@@ -15,6 +15,6 @@ COPY --from=gobuild /mechbot /usr/local/bin/mechbot
 WORKDIR /bot
 COPY mechfight.py bot.py hybrid.py ./
 COPY ttun/ ./ttun/
-COPY helpers/kanya/LICENSE helpers/kanya/THIRD_PARTY_LICENSES ./helpers/kanya/
+COPY helpers/giddy70c8b23/LICENSE ./helpers/giddy70c8b23/
 ENV MR_TTUN=11350d3 MR_HELPER=/usr/local/bin/mechbot
 ENTRYPOINT ["python3", "-u", "/bot/hybrid.py"]
