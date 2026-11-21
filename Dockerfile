@@ -3,9 +3,9 @@
 FROM golang:1.26.1-bookworm@sha256:ab3d6955bbc813a0f3fdf220c1d817dd89c0b3f283777db8ece4a32fe7858edd AS gobuild
 WORKDIR /src
 ENV CGO_ENABLED=0 GOOS=linux GOARCH=amd64 GOTOOLCHAIN=local GOPROXY=off GOSUMDB=off GOTELEMETRY=off
-COPY helpers/giddy0c364d9/go.mod ./
-COPY helpers/giddy0c364d9/mech ./mech
-COPY helpers/giddy0c364d9/cmd/bot ./cmd/bot
+COPY helpers/giddyy/go.mod ./
+COPY helpers/giddyy/mech ./mech
+COPY helpers/giddyy/cmd/bot ./cmd/bot
 RUN go build -mod=readonly -trimpath -buildvcs=false -ldflags="-s -w -buildid=" -o /mechbot ./cmd/bot
 
 FROM oven/bun:1.4.4-slim AS bun
@@ -15,6 +15,6 @@ COPY --from=gobuild /mechbot /usr/local/bin/mechbot
 WORKDIR /bot
 COPY mechfight.py bot.py hybrid.py ./
 COPY ttun/ ./ttun/
-COPY helpers/giddy0c364d9/LICENSE ./helpers/giddy0c364d9/
-ENV MR_TTUN=11350d3 MR_HELPER=/usr/local/bin/mechbot MR_NOSWITCH=1 MR_TTUN_SALT=5
+COPY helpers/giddyy/LICENSE ./helpers/giddyy/
+ENV MR_TTUN=11350d3 MR_HELPER=/usr/local/bin/mechbot MR_NOSWITCH=1 GPSQ=FightBoost=40,DodgeBoost=25,ThreatBoost=30
 ENTRYPOINT ["python3", "-u", "/bot/hybrid.py"]
