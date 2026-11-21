@@ -39,7 +39,11 @@ class Hybrid:
             self.proc = subprocess.Popen([BUN, os.path.join(TTUN_DIR, "bot.ts")], cwd=TTUN_DIR,
                                          stdin=subprocess.PIPE, stdout=subprocess.PIPE,
                                          stderr=subprocess.DEVNULL, env=env, bufsize=0)
-            self._send(hello)
+            h = dict(hello)
+            salt = int(os.environ.get("MR_TTUN_SALT", "0"))
+            if salt:
+                h["seed"] = (int(hello.get("seed", 0)) + 7919 * salt) & 0xFFFFFFFF  # re-roll its tie-breaks
+            self._send(h)
             if self._read_line(time.perf_counter() + READY_TIMEOUT_S) is None:
                 ours.log("ttun: no ready, using our bot only")
                 self._stop()

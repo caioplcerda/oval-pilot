@@ -1,0 +1,1 @@
+[{"name": "hyb11350d3", "mode": "practice", "matches": 440, "seed0": 1400000, "flags": "sneak,shyhide,auto2,shyT480,shyA2,ev,rush,rushT60,jink", "botfile": "tools/hybrid_simbot.py", "simargs": ["--squad", "--noise", "1.3", "--lasers", "12", "--squad-late", "200"]}]
