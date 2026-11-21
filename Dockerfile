@@ -16,5 +16,5 @@ WORKDIR /bot
 COPY mechfight.py bot.py hybrid.py ./
 COPY ttun/ ./ttun/
 COPY helpers/kanya/LICENSE helpers/kanya/THIRD_PARTY_LICENSES ./helpers/kanya/
-ENV MR_TTUN=11350d3 MR_HELPER=/usr/local/bin/mechbot MR_TTUN_SALT=1
+ENV MR_TTUN=11350d3 MR_HELPER=/usr/local/bin/mechbot MR_TTUN_SALT=2
 ENTRYPOINT ["python3", "-u", "/bot/hybrid.py"]
