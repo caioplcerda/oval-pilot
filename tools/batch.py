@@ -30,6 +30,26 @@ def run_chunk(exp, start, n):
     return exp["name"], [l for l in out.splitlines() if l.startswith("{") and key in l]
 
 
+def decided(lines, exp):
+    """Early stop: every variant is clearly better/worse (|d| >= k*se) or clearly flat (se < flat_se, |d| < flat_d)."""
+    rows = [json.loads(l)["means"] for l in lines]
+    n = len(rows)
+    if n < exp["min_n"]:
+        return False
+    labs = list(rows[0])
+    base = labs[0]
+    k, flat_se, flat_d = exp.get("stop_k", 2.5), exp.get("flat_se", 0.10), exp.get("flat_d", 0.15)
+    for lab in labs[1:]:
+        if exp.get("compare") and lab not in exp["compare"]:
+            continue
+        d = [r[lab] - r[base] for r in rows]
+        mu = sum(d) / n
+        se = math.sqrt(sum((x - mu) ** 2 for x in d) / max(1, n - 1) / n)
+        if not (abs(mu) >= k * se or (se < flat_se and abs(mu) < flat_d)):
+            return False
+    return True
+
+
 def summarize(exp, lines):
     rows = [json.loads(l) for l in lines]
     n = len(rows)
@@ -66,12 +86,26 @@ def main():
         for s in range(0, n, CHUNK):
             tasks.append((e, e.get("seed0", 0) + s, min(CHUNK, n - s)))
     data = {e["name"]: [] for e in exps}
+    byname = {e["name"]: e for e in exps}
     t0 = time.time()
     with ProcessPoolExecutor(max_workers=int(os.environ.get("BATCH_WORKERS", os.cpu_count()))) as ex:
-        futs = [ex.submit(run_chunk, *t) for t in tasks]
+        futs = []
+        owner = {}
+        for t in tasks:
+            fu = ex.submit(run_chunk, *t)
+            futs.append(fu)
+            owner[fu] = t[0]["name"]
+        stopped = set()
         for i, f in enumerate(as_completed(futs)):
+            if f.cancelled():
+                continue
             name, lines = f.result()
             data[name] += lines
+            e = byname[name]
+            if name not in stopped and e["mode"] == "league" and e.get("min_n") and decided(data[name], e):
+                stopped.add(name)
+                n_cancel = sum(1 for fu in futs if owner[fu] == name and fu.cancel())
+                print("early stop %s at n=%d (%d chunks cancelled)" % (name, len(data[name]), n_cancel), flush=True)
             with open(os.path.join(out, name + ".jsonl"), "a") as fh:
                 fh.write("".join(l + "\n" for l in lines))
             if i % 20 == 0:
