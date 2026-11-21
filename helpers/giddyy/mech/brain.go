@@ -51,6 +51,7 @@ type Brain struct {
 
 	strafe      float64
 	strafeUntil float64
+	boostLock   bool
 
 	retreat   bool
 	coverAt   float64
@@ -781,6 +782,9 @@ func (b *Brain) step(o *Obs, act *Action) {
 		if b.P.FightBoost > 0 && me.Energy > b.P.FightBoost && (laser == nil || laser.Charge <= 0) && (light == nil || me.Energy > 60) {
 			boost = true
 		}
+		if b.notPractice && xOn("chargeboost") && laser != nil && laser.Charge > 0 && now-b.lastHurt < 2.5 && me.Energy > 30 {
+			boost = true
+		}
 		if b.P.FightLoot > 0 {
 			r := b.P.FightLoot
 			if hpFrac <= 0.5 {
@@ -870,6 +874,16 @@ func (b *Brain) step(o *Obs, act *Action) {
 	}
 	if b.P.ThreatBoost > 0 && me.Energy > b.P.ThreatBoost && (foe != nil || now-b.lastHurt < 2.5) && (light == nil || me.Energy > 60) {
 		boost = true
+	}
+	if b.notPractice && xOn("hyst") && me.Grounded && mode != "escape" {
+		if me.Energy < 30 {
+			b.boostLock = true
+		} else if me.Energy > 60 {
+			b.boostLock = false
+		}
+		if b.boostLock {
+			boost = false
+		}
 	}
 
 	if mode == "escape" {
@@ -1391,10 +1405,15 @@ func (b *Brain) fightMove(o *Obs, tg *Track, seen []*Track, wantLos float64) (fl
 	bd := hyp(bx, by) + 1e-9
 	ux, uy := bx/bd, by/bd
 	if b.now >= b.strafeUntil {
-		if b.rng.Float64() < 0.6 {
+		jink := b.notPractice && xOn("jink")
+		flip, span := 0.6, 0.7
+		if jink {
+			flip, span = 0.8, 0.3
+		}
+		if b.rng.Float64() < flip {
 			b.strafe = -b.strafe
 		}
-		b.strafeUntil = b.now + 0.3 + b.rng.Float64()*0.7
+		b.strafeUntil = b.now + 0.3 + b.rng.Float64()*span
 	}
 	sx, sy := -uy*b.strafe, ux*b.strafe
 	tc := b.center(tg)
