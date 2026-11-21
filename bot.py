@@ -833,12 +833,14 @@ class Bot:
         shy = self._fp("shyT", 0) > t and obs["alive"] > self._fp("shyA", 0)
         if "auto2" in self.flags and not self.ffa:
             shy = False  # play the practice game until a free-for-all is proven
+            if "pshy" in self.flags and t < self._fp("pshyT", 480):
+                shy = True  # practice: leave idle house bots alone, fight the hunters that come for us
         if "auto" in self.flags and not self.ffa and t >= self._fp("autoT", 30):
             shy = False  # nobody died without us by now: practice squad, play to kill
         self.shy_now = shy
         if shy and target is not None:
             m_ = target["m"]
-            if "ev" in self.flags:
+            if "ev" in self.flags and self.ffa:
                 keep = self._ev_ok(obs, me, target, t, threats)
             else:
                 keep = (t - self.attackers.get(m_["id"], -99.0) < 4.0 or target["d"] < self._fp("shyD", 35)
@@ -847,7 +849,7 @@ class Bot:
                 target = None
                 hide = "shyhide" in self.flags
                 self.hide_until = t + 2.0
-        late_filter = late_only or (shy and "ev" not in self.flags)
+        late_filter = late_only or (shy and not ("ev" in self.flags and self.ffa))
         late = late or shy
         if late_filter and target is not None:
             m_ = target["m"]

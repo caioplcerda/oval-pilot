@@ -1,0 +1,128 @@
+[
+ {
+  "name": "sq_v2",
+  "mode": "practice",
+  "matches": 880,
+  "seed0": 600000,
+  "flags": "sneak,shyhide,auto2,shyT480,shyA2,ev,rush,rushT60",
+  "simargs": [
+   "--squad",
+   "--noise",
+   "1.3",
+   "--lasers",
+   "12",
+   "--squad-late",
+   "200"
+  ]
+ },
+ {
+  "name": "sq_pshy",
+  "mode": "practice",
+  "matches": 880,
+  "seed0": 600000,
+  "flags": "sneak,shyhide,auto2,shyT480,shyA2,ev,rush,rushT60,pshy",
+  "simargs": [
+   "--squad",
+   "--noise",
+   "1.3",
+   "--lasers",
+   "12",
+   "--squad-late",
+   "200"
+  ]
+ },
+ {
+  "name": "sq_pshyD60",
+  "mode": "practice",
+  "matches": 880,
+  "seed0": 600000,
+  "flags": "sneak,shyhide,auto2,shyT480,shyA2,ev,rush,rushT60,pshy,PshyD60",
+  "simargs": [
+   "--squad",
+   "--noise",
+   "1.3",
+   "--lasers",
+   "12",
+   "--squad-late",
+   "200"
+  ]
+ },
+ {
+  "name": "sq_pshyD90",
+  "mode": "practice",
+  "matches": 880,
+  "seed0": 600000,
+  "flags": "sneak,shyhide,auto2,shyT480,shyA2,ev,rush,rushT60,pshy,PshyD90",
+  "simargs": [
+   "--squad",
+   "--noise",
+   "1.3",
+   "--lasers",
+   "12",
+   "--squad-late",
+   "200"
+  ]
+ },
+ {
+  "name": "sq_pshyT200",
+  "mode": "practice",
+  "matches": 880,
+  "seed0": 600000,
+  "flags": "sneak,shyhide,auto2,shyT480,shyA2,ev,rush,rushT60,pshy,pshyT200",
+  "simargs": [
+   "--squad",
+   "--noise",
+   "1.3",
+   "--lasers",
+   "12",
+   "--squad-late",
+   "200"
+  ]
+ },
+ {
+  "name": "sq_pshyNoHide",
+  "mode": "practice",
+  "matches": 880,
+  "seed0": 600000,
+  "flags": "sneak,auto2,shyT480,shyA2,ev,rush,rushT60,pshy",
+  "simargs": [
+   "--squad",
+   "--noise",
+   "1.3",
+   "--lasers",
+   "12",
+   "--squad-late",
+   "200"
+  ]
+ },
+ {
+  "name": "sq_pshyD60T200",
+  "mode": "practice",
+  "matches": 880,
+  "seed0": 600000,
+  "flags": "sneak,shyhide,auto2,shyT480,shyA2,ev,rush,rushT60,pshy,PshyD60,pshyT200",
+  "simargs": [
+   "--squad",
+   "--noise",
+   "1.3",
+   "--lasers",
+   "12",
+   "--squad-late",
+   "200"
+  ]
+ },
+ {
+  "name": "orig_v2",
+  "mode": "practice",
+  "matches": 660,
+  "seed0": 600000,
+  "flags": "sneak,shyhide,auto2,shyT480,shyA2,ev,rush,rushT60"
+ },
+ {
+  "name": "orig_pshyD60",
+  "mode": "practice",
+  "matches": 660,
+  "seed0": 600000,
+  "flags": "sneak,shyhide,auto2,shyT480,shyA2,ev,rush,rushT60,pshy,PshyD60"
+ }
+]
