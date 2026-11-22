@@ -519,7 +519,7 @@ class Bot:
         elif target is not None:
             mode = "fight"
             d = target["d"]
-            pref = 110 if laser else (26 if light else 60)
+            pref = knob("PREF_LASER", 110) if laser else (26 if light else knob("PREF_GUN", 60))
             if laser and light and d < 55:
                 pref = 26
             if target["hp"] < 0.25 * target["max_hp"] and hp > 0.4:
@@ -539,7 +539,8 @@ class Bot:
                 if self.peek is not None and math.dist(self.peek, (x, y)) < 22:
                     goal = self.peek  # duck behind cover while the laser recharges
                     mode = "peek"
-            boost = energy > knob("FIGHT_BOOST", 35) and not (laser and (laser.get("charge", 0) or 0) > 0)
+            fb = knob("FIGHT_BOOST", 35) if self.ffa else knob("FIGHT_BOOST_P", 10)  # practice: boost hard in duels
+            boost = energy > fb and not (laser and (laser.get("charge", 0) or 0) > 0)
         elif cube:
             mode, goal = "cube", cube[1][:2]
         elif want:
