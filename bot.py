@@ -51,7 +51,7 @@ class Bot:
     def __init__(self, hello):
         self.cfg = hello["config"]
         self.slot = hello.get("slot", -1)
-        self.rng = random.Random(hello.get("seed", 0))
+        self.rng = random.Random(hello.get("seed", 0) + 7919 * int(knob("SALT", 0)))
         self.w = World(hello.get("map", {}).get("dir", "/arena"))
         self.reach = self.cfg["loot"]["pickup_radius"]
         self.attackers = {}        # id -> last time it hit us
