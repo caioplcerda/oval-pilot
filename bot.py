@@ -66,6 +66,8 @@ class Bot:
         self.stuck_t, self.climb_until = 0.0, -1.0
         self.detour, self.detour_until = None, -1.0
         self.scan = None
+        self.home, self.home_t = None, -99.0
+        self.foe_near_t = -99.0
         self.t0 = 0.0
         self.mode = "start"
 
@@ -195,6 +197,44 @@ class Bot:
                     return best
         return best
 
+    def _crate_goal(self, pos, zs):
+        cands = [(math.dist(p[:2], pos[:2]), p) for p in self.crates.values() if p[2] < pos[2] + 8 and self._inside_soon(zs, p)]
+        cands = [c for c in cands if 15 < c[0] < 260]
+        return min(cands, key=lambda c: c[0])[1][:2] if cands else None
+
+    def _home(self, obs, pos, zs, foes, t):
+        """Free-for-all resting spot: inside the next circle, few open sight lines, away from known mechs."""
+        if self.home is not None and t - self.home_t < 10 and math.dist(self.home, zs["nc"]) < zs["nr"] * 0.8:
+            return self.home
+        w = self.w
+        if not w.ok:
+            return zs["nc"]
+        self.home_t = t
+        best, bc = None, 1e18
+        for k in range(14):
+            a = self.rng.random() * TAU
+            r = math.sqrt(self.rng.random()) * zs["nr"] * 0.6
+            px, py = zs["nc"][0] + math.cos(a) * r, zs["nc"][1] + math.sin(a) * r
+            kk = w.ncell(px, py)
+            if not w.free[kk] or math.dist((px, py), zs["c"]) > zs["r"] - 15:
+                continue
+            head = (px, py, w.ground(px, py) + 8)
+            open_dirs = 0
+            for j in range(8):
+                b = j * TAU / 8
+                far = (px + math.cos(b) * 50, py + math.sin(b) * 50, head[2])
+                if w.los(head, far, 4.0):
+                    open_dirs += 1
+            crowd = sum(1 for m in foes if math.dist(m["pos"][:2], (px, py)) < 120)
+            cost = open_dirs * 12 + crowd * 40 + 0.2 * math.dist((px, py), pos[:2])
+            if cost < bc:
+                best, bc = (px, py), cost
+            if self._late(28):
+                break
+        if best is not None:
+            self.home = best
+        return self.home or zs["nc"]
+
     # ------------------------------------------------------------------ dodge
     def _dodge(self, obs, me, foes):
         x, y, z = me["pos"]
@@ -292,6 +332,9 @@ class Bot:
             m["shoot"] = d < 285 and not (d > 120 and self._late(15)) and self.w.los(muzzle, ctr)
             foes.append(m)
         threats = [m for m in foes if m["shoot"] and m["d"] < 240]
+        if any(m["d"] < 150 for m in foes):
+            self.foe_near_t = t
+        calm = t - self.foe_near_t > knob("CALM_S", 4)
         target, best = None, 1e18
         for m in threats:
             s = m["d"] + 0.15 * m["hp"]
@@ -301,19 +344,25 @@ class Bot:
                 s -= 80
             if s < best:
                 target, best = m, s
-        if target is not None and self.ffa and obs["alive"] > knob("SHY_ALIVE", 6):
+        if target is not None and self.ffa and obs["alive"] > 2:
             m = target
-            if not (t - self.attackers.get(m["id"], -99) < 4 or m["d"] < 40 or m["hp"] < 0.25 * m["max_hp"]):
+            aimed_at_us = m.get("charging") and abs(wrap(m["aim"][0] - math.atan2(y - m["pos"][1], x - m["pos"][0]))) < 0.25
+            if not (t - self.attackers.get(m["id"], -99) < 4 or m["d"] < knob("ENGAGE", 55)
+                    or (m["hp"] < 0.3 * m["max_hp"] and m["d"] < 120 and hp > 0.5)
+                    or (aimed_at_us and m["d"] < 120)):
                 target = None  # free-for-all: let others fight; only answer who is on us
+
+        if self.retreat and target is not None and t - self.attackers.get(target["id"], -99) > 4 and target["hp"] > 0.25 * target["max_hp"]:
+            target = None  # healing: only shoot back at whoever is on us
 
         # NPC drones / crates to farm for cubes when calm
         farm = None
-        if target is None and hp > 0.55 and not threats and not (self.ffa and foes):
+        if target is None and hp > knob("FARM_HP", 0.5) and not threats and (calm or not self.ffa):
             cands = []
             for n in obs["mechs"]:
                 if n["kind"] == "npc":
                     d = math.dist(n["pos"][:2], (x, y))
-                    if d < 140:
+                    if d < 200:
                         cands.append((d + 25, (n["pos"][0], n["pos"][1], n["pos"][2] + 1.75), n.get("vel", [0, 0, 0]), 1.8))
             for c in obs["crates"]:
                 d = math.dist(c["pos"][:2], (x, y))
@@ -345,7 +394,7 @@ class Bot:
             g_pitch = math.atan2(pz - muzzle[2], math.hypot(px - muzzle[0], py - muzzle[1]))
             l_yaw = math.atan2(ctr[1] + vel[1] * 0.1 - muzzle[1], ctr[0] + vel[0] * 0.1 - muzzle[0])
             l_pitch = math.atan2(ctr[2] - muzzle[2], math.hypot(ctr[0] - muzzle[0], ctr[1] - muzzle[1]))
-            tol = math.atan2(rad * 1.2, max(d, 1.0)) + 0.008
+            tol = math.atan2(rad * knob("TOL", 1.0), max(d, 1.0)) + 0.006
             tolp = math.atan2(2.5, max(d, 1.0)) + 0.004
             aim_yaw, aim_pitch = g_yaw, g_pitch
             if laser is not None and d < laser["stats"].get("range", 280) - 5:
@@ -415,15 +464,15 @@ class Bot:
         # ---------------------------------------------------------- mode
         recent_hurt = t - self.hurt_t < 3
         many = len(threats) >= 3 or (len(threats) >= 2 and hp < 0.6)
-        if self.retreat and (hp > 0.8 or (t - self.hurt_t > 8 and hp > 0.55)):
+        if self.retreat and (hp > knob("RECOVER", 0.85) or (t - self.hurt_t > 12 and hp > 0.7)):
             self.retreat = False
-        if (hp < knob("RETREAT", 0.4) and (threats or recent_hurt)) or (many and not (target and target["hp"] < 0.25 * target["max_hp"])):
+        if (hp < (knob("RETREAT_FFA", 0.5) if self.ffa else knob("RETREAT", 0.4)) and (threats or recent_hurt)) or (many and not (target and target["hp"] < 0.25 * target["max_hp"])):
             self.retreat = True
         goal, boost, mode = None, False, "roam"
         if zs["outside"]:
             mode, goal = "zone", zs["nc"]
             boost = energy > 25
-        elif self.retreat and (threats or recent_hurt):
+        elif self.retreat and (threats or recent_hurt or self.cover is not None):
             mode = "cover"
             if self.cover is None or t - self.cover_t > 1.0:
                 ths = threats or [m for m in foes][:3]
@@ -465,6 +514,13 @@ class Bot:
             mode = "farm"
             fd = math.dist(farm[1][:2], (x, y))
             goal = farm[1][:2] if fd > 35 else None
+        elif self.ffa and calm and hp > 0.6 and self.crates and obs["t"] < knob("ECON_T", 260) and self._crate_goal(pos, zs) is not None:
+            mode, goal = "econ", self._crate_goal(pos, zs)
+        elif self.ffa:
+            mode = "home"
+            hp_ = self._home(obs, pos, zs, foes, t)
+            if hp_ is not None and math.dist(hp_, (x, y)) > 4:
+                goal = hp_
         else:
             mode = "roam"
             nc, nr = zs["nc"], zs["nr"]
@@ -499,7 +555,7 @@ class Bot:
             move = [move[0] / n, move[1] / n]
             boost = boost or energy > 25
         # quiet: under 5 m/s a mech makes no sound
-        if mode in ("roam", "cube", "farm") and not boost and dodge is None and (foes or (self.sound and t - self.sound[0] < 8)):
+        if mode in ("roam", "cube", "farm", "home", "econ") and not boost and dodge is None and (foes or (self.sound and t - self.sound[0] < 8)):
             q = 4.6 / max(1.0, st.get("walk_speed", 11.7))
             n = math.hypot(*move)
             if n > q:
