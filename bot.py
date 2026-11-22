@@ -332,7 +332,7 @@ class Bot:
             m["shoot"] = d < 285 and not (d > 120 and self._late(15)) and self.w.los(muzzle, ctr)
             foes.append(m)
         threats = [m for m in foes if m["shoot"] and m["d"] < 240]
-        if any(m["d"] < 150 for m in foes):
+        if any(m["d"] < knob("CALM_R", 150) for m in foes):
             self.foe_near_t = t
         calm = t - self.foe_near_t > knob("CALM_S", 4)
         target, best = None, 1e18
@@ -504,6 +504,8 @@ class Bot:
         elif not armed and want and (target is None or target["d"] > 45 or want[3] < 20):
             mode, goal = "arm", want[1][:2]
             boost = energy > (20 if t < 60 else 50)
+        elif cube and cube[0] < knob("CUBE_FIGHT", 0) and hp > 0.3:
+            mode, goal = "cube", cube[1][:2]  # grab dropped cubes even mid-fight when they are close
         elif target is not None:
             mode = "fight"
             d = target["d"]
@@ -533,6 +535,7 @@ class Bot:
             goal = farm[1][:2] if fd > 35 else None
         elif self.ffa and calm and hp > 0.6 and self.crates and obs["t"] < knob("ECON_T", 260) and self._crate_goal(pos, zs) is not None:
             mode, goal = "econ", self._crate_goal(pos, zs)
+            boost = knob("ECON_BOOST", 0) > 0 and energy > 60 and math.dist(goal, (x, y)) > 50
         elif self.ffa:
             mode = "home"
             hp_ = self._home(obs, pos, zs, foes, t)
