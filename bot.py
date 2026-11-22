@@ -303,7 +303,7 @@ class Bot:
         for s in obs["sounds"]:
             if s["kind"] in THREAT_SOUNDS and s["dist"] != "far":
                 self.sound = (t, s["bearing"])
-        if 16 - obs["alive"] - self.kills >= knob("FFA_N", 1) and t < 100 and knob("NOFFA", 0) <= 0:
+        if 16 - obs["alive"] - self.kills >= knob("FFA_N", 3) and t < 100 and knob("NOFFA", 0) <= 0:
             self.ffa = True  # practice house bots only die to us; free-for-all mechs die early on their own
         if obs["offer"]:
             act["pick"] = self._pick_upgrade(obs["offer"])
