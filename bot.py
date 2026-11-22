@@ -487,11 +487,15 @@ class Bot:
             self.retreat = False
         if (hp < (knob("RETREAT_FFA", 0.5) if self.ffa else knob("RETREAT", 0.4)) and (threats or recent_hurt)) or (many and not (target and target["hp"] < 0.25 * target["max_hp"])):
             self.retreat = True
+        cornered = (knob("CORNER", 0) > 0 and target is not None and target["d"] < knob("CORNER", 0)
+                    and t - self.attackers.get(target["id"], -99) < 3 and len(threats) <= 1
+                    and target["hp"] < me["hp"] * knob("CORNER_R", 1.5))
+        under_fire = target is not None and t - self.attackers.get(target["id"], -99) < 3
         goal, boost, mode = None, False, "roam"
         if zs["outside"]:
             mode, goal = "zone", zs["nc"]
             boost = energy > 25
-        elif self.retreat and (threats or recent_hurt or self.cover is not None):
+        elif self.retreat and not cornered and (threats or recent_hurt or self.cover is not None):
             mode = "cover"
             if self.cover is None or t - self.cover_t > 1.0:
                 ths = threats or [m for m in foes][:3]
@@ -511,7 +515,7 @@ class Bot:
                 self.cover, self.cover_t = self._cover_point(pos, ghost, zs), t
             goal = self.cover
             boost = energy > 30
-        elif not armed and want and (target is None or target["d"] > 45 or want[3] < 20):
+        elif not armed and want and (target is None or (target["d"] > knob("ARM_D", 45) and not (knob("ARM_ATT", 0) > 0 and under_fire)) or want[3] < 20):
             mode, goal = "arm", want[1][:2]
             boost = energy > (20 if t < 60 else 50)
         elif cube and cube[0] < knob("CUBE_FIGHT", 0) and hp > 0.3:
