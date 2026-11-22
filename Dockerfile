@@ -3,6 +3,4 @@
 FROM python:3.13.9-slim
 WORKDIR /bot
 COPY mechfight.py world.py bot.py ./
-ENV AB_LOOT_LASER=0
-ENV AB_LOOT_LIGHT=30
 ENTRYPOINT ["python3", "-u", "/bot/bot.py"]
