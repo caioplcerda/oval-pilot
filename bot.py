@@ -68,6 +68,8 @@ class Bot:
         self.scan = None
         self.home, self.home_t = None, -99.0
         self.foe_near_t = -99.0
+        self.focus_id, self.focus_t = None, -99.0
+        self.peek, self.peek_t = None, -99.0
         self.t0 = 0.0
         self.mode = "start"
 
@@ -342,6 +344,8 @@ class Bot:
                 s -= 120
             if t - self.attackers.get(m["id"], -99) < 4:
                 s -= 80
+            if m["id"] == self.focus_id and t - self.focus_t < 3:
+                s -= knob("STICK", 0)
             if s < best:
                 target, best = m, s
         if target is not None and self.ffa and obs["alive"] > 2:
@@ -352,6 +356,8 @@ class Bot:
                     or (aimed_at_us and m["d"] < 120)):
                 target = None  # free-for-all: let others fight; only answer who is on us
 
+        if target is not None:
+            self.focus_id, self.focus_t = target["id"], t
         if self.retreat and target is not None and t - self.attackers.get(target["id"], -99) > 4 and target["hp"] > 0.25 * target["max_hp"]:
             target = None  # healing: only shoot back at whoever is on us
 
@@ -523,6 +529,12 @@ class Bot:
             mx = math.cos(a) * radial + math.cos(a + math.pi / 2) * 0.85 * self.strafe
             my = math.sin(a) * radial + math.sin(a + math.pi / 2) * 0.85 * self.strafe
             goal = (x + mx * 20, y + my * 20)
+            if knob("PEEK", 0) > 0 and laser is not None and laser.get("cooldown", 0) > 0.6 and d > 50 and (laser.get("charge", 0) or 0) <= 0:
+                if self.peek is None or t - self.peek_t > 1.5:
+                    self.peek, self.peek_t = self._cover_point(pos, [target], zs), t
+                if self.peek is not None and math.dist(self.peek, (x, y)) < 22:
+                    goal = self.peek  # duck behind cover while the laser recharges
+                    mode = "peek"
             boost = energy > knob("FIGHT_BOOST", 35) and not (laser and (laser.get("charge", 0) or 0) > 0)
         elif cube:
             mode, goal = "cube", cube[1][:2]
