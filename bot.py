@@ -498,7 +498,7 @@ class Bot:
         under_fire = target is not None and t - self.attackers.get(target["id"], -99) < 3
         if pm and knob("PM_LOSE", 1) > 0:
             near = sum(1 for m in foes if m["d"] < 160)
-            losing = (near >= 2 and hp < 0.55) or (near >= 3 and hp < 0.8)
+            losing = (near >= 2 and hp < knob("PM_L2", 0.55)) or (near >= 3 and hp < knob("PM_L3", 0.8))
             if target is not None:
                 tf = target["hp"] / max(1.0, target["max_hp"])
                 if hp < 0.35 and tf > hp + 0.1:
@@ -507,7 +507,7 @@ class Bot:
                     losing = False
             if losing:
                 self.lose_t = t
-            self.retreat = t - self.lose_t < 1.5  # back off briefly only while clearly losing
+            self.retreat = t - self.lose_t < knob("PM_LOSE_T", 1.5)  # back off briefly only while clearly losing
         goal, boost, mode = None, False, "roam"
         if zs["outside"]:
             mode, goal = "zone", zs["nc"]
@@ -524,7 +524,7 @@ class Bot:
         elif zs["go"]:
             mode, goal = "zone", zs["nc"]
             boost = zs["need"] > 60 and energy > 50
-        elif target is None and t - self.hurt_t < 2.5 and self.hurt_bearing is not None and knob("HIDE", 1) > 0:
+        elif target is None and t - self.hurt_t < 2.5 and self.hurt_bearing is not None and knob("HIDE", 1) > 0 and not (pm and knob("PM_HIDE", 1) <= 0):
             mode = "hide"
             if self.cover is None or t - self.cover_t > 1.0:
                 b = self.hurt_bearing
