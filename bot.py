@@ -382,7 +382,7 @@ class Bot:
         if any(m["d"] < knob("CALM_R", 150) for m in foes):
             self.foe_near_t = t
         calm = t - self.foe_near_t > knob("CALM_S", 4)
-        pm = (not self.ffa) and t > 20 and knob("PM", 1) > 0  # practice mode: hunt the house squad hard
+        pm = (not self.ffa) and t > knob("PM_T0", 20) and knob("PM", 1) > 0  # practice mode: hunt the house squad hard
         target, best = None, 1e18
         for m in threats:
             s = m["d"] + 0.15 * m["hp"]
@@ -506,10 +506,10 @@ class Bot:
             if kind not in WANT or kind in held or abs(pp[2] - z) > 25:
                 continue
             d = math.dist(pp[:2], (x, y))
-            lim = 260 if not armed else (knob("PM_SEEK", 240) if (kind == "laser" and not self.ffa and obs["t"] > 20 and knob("PM", 1) > 0) else 140)
+            lim = 260 if not armed else (knob("PM_SEEK", 240) if (kind == "laser" and not self.ffa and obs["t"] > knob("PM_T0", 20) and knob("PM", 1) > 0) else 140)
             if d > lim or (not self._inside_soon(zs, pp) and d > 30):
                 continue
-            score = d - (40 if kind == "laser" else 0)
+            score = d - (knob("LOOT_LASER", 40) if kind == "laser" else knob("LOOT_LIGHT", 0))
             if want is None or score < want[2]:
                 want = (pid, pp, score, d)
         if want and want[3] < self.reach - 0.3 and abs(want[1][2] - z) < 3.8:
