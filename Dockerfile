@@ -3,4 +3,7 @@
 FROM python:3.13.9-slim
 WORKDIR /bot
 COPY mechfight.py world.py bot.py ./
+ENV AB_PM_CUBE_Z=12
+ENV AB_PM_CUBE_R=100
+ENV AB_PM_FLOOT=100
 ENTRYPOINT ["python3", "-u", "/bot/bot.py"]
