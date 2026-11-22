@@ -72,6 +72,7 @@ class Bot:
         self.home, self.home_t = None, -99.0
         self.foe_near_t = -99.0
         self.focus_id, self.focus_t = None, -99.0
+        self.lose_t = -99.0
         self.peek, self.peek_t = None, -99.0
         self.t0 = 0.0
         self.mode = "start"
@@ -341,15 +342,18 @@ class Bot:
         if any(m["d"] < knob("CALM_R", 150) for m in foes):
             self.foe_near_t = t
         calm = t - self.foe_near_t > knob("CALM_S", 4)
+        pm = (not self.ffa) and t > 20 and knob("PM", 1) > 0  # practice mode: hunt the house squad hard
         target, best = None, 1e18
         for m in threats:
             s = m["d"] + 0.15 * m["hp"]
             if m["hp"] < 0.3 * m["max_hp"]:
-                s -= 120
+                s -= knob("PM_LOW", 200) if pm else 120
             if t - self.attackers.get(m["id"], -99) < 4:
                 s -= 80
             if m["id"] == self.focus_id and t - self.focus_t < 3 and (self.ffa or knob("STICK_PRACTICE", 0) > 0):
-                s -= knob("STICK", 100)  # focus fire helps in a free-for-all; in practice it cost points
+                s -= knob("STICK", 100)  # focus fire helps in a free-for-all
+            elif pm and m["id"] == self.focus_id and t - self.focus_t < 2:
+                s -= knob("PM_STICK", 200)
             if s < best:
                 target, best = m, s
         if target is not None and self.ffa and obs["alive"] > 2:
@@ -362,7 +366,7 @@ class Bot:
 
         if target is not None:
             self.focus_id, self.focus_t = target["id"], t
-        if self.retreat and target is not None and t - self.attackers.get(target["id"], -99) > 4 and target["hp"] > 0.25 * target["max_hp"]:
+        if not pm and self.retreat and target is not None and t - self.attackers.get(target["id"], -99) > 4 and target["hp"] > 0.25 * target["max_hp"]:
             target = None  # healing: only shoot back at whoever is on us
 
         # NPC drones / crates to farm for cubes when calm
@@ -461,7 +465,7 @@ class Bot:
             if kind not in WANT or kind in held or abs(pp[2] - z) > 25:
                 continue
             d = math.dist(pp[:2], (x, y))
-            lim = 260 if not armed else 140
+            lim = 260 if not armed else (knob("PM_SEEK", 240) if (kind == "laser" and not self.ffa and obs["t"] > 20 and knob("PM", 1) > 0) else 140)
             if d > lim or (not self._inside_soon(zs, pp) and d > 30):
                 continue
             score = d - (40 if kind == "laser" else 0)
@@ -491,6 +495,18 @@ class Bot:
                     and t - self.attackers.get(target["id"], -99) < 3 and len(threats) <= 1
                     and target["hp"] < me["hp"] * knob("CORNER_R", 1.5))
         under_fire = target is not None and t - self.attackers.get(target["id"], -99) < 3
+        if pm and knob("PM_LOSE", 1) > 0:
+            near = sum(1 for m in foes if m["d"] < 160)
+            losing = (near >= 2 and hp < 0.55) or (near >= 3 and hp < 0.8)
+            if target is not None:
+                tf = target["hp"] / max(1.0, target["max_hp"])
+                if hp < 0.35 and tf > hp + 0.1:
+                    losing = True
+                if tf < 0.25 and hp > 0.2 and near <= 2:
+                    losing = False
+            if losing:
+                self.lose_t = t
+            self.retreat = t - self.lose_t < 1.5  # back off briefly only while clearly losing
         goal, boost, mode = None, False, "roam"
         if zs["outside"]:
             mode, goal = "zone", zs["nc"]
@@ -528,6 +544,9 @@ class Bot:
                 pref = 26
             if target["hp"] < 0.25 * target["max_hp"] and hp > 0.4:
                 pref = min(pref, 35)
+            crowd = sum(1 for m in threats if m["d"] < 160)
+            if pm and target["hp"] < 0.38 * target["max_hp"] and hp > 0.42 and crowd <= 2:
+                pref = knob("PM_FINISH", 20)  # close in to finish a hurt target
             if t > self.strafe_until:
                 if self.rng.random() < 0.7:
                     self.strafe = -self.strafe
@@ -537,7 +556,10 @@ class Bot:
             mx = math.cos(a) * radial + math.cos(a + math.pi / 2) * 0.85 * self.strafe
             my = math.sin(a) * radial + math.sin(a + math.pi / 2) * 0.85 * self.strafe
             goal = (x + mx * 20, y + my * 20)
-            if knob("PEEK", 1) > 0 and laser is not None and laser.get("cooldown", 0) > 0.6 and d > 50 and (laser.get("charge", 0) or 0) <= 0:
+            fl = knob("PM_FLOOT", 70) * (0.57 if hp <= 0.5 else 1.0) if pm else 0
+            if fl > 0 and cube is not None and cube[0] < fl:
+                goal = cube[1][:2]  # scoop cubes mid-fight
+            elif knob("PEEK", 1) > 0 and not pm and laser is not None and laser.get("cooldown", 0) > 0.6 and d > 50 and (laser.get("charge", 0) or 0) <= 0:
                 if self.peek is None or t - self.peek_t > 1.5:
                     self.peek, self.peek_t = self._cover_point(pos, [target], zs), t
                 if self.peek is not None and math.dist(self.peek, (x, y)) < 22:
