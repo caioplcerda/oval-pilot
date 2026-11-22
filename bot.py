@@ -345,7 +345,7 @@ class Bot:
             if t - self.attackers.get(m["id"], -99) < 4:
                 s -= 80
             if m["id"] == self.focus_id and t - self.focus_t < 3:
-                s -= knob("STICK", 0)
+                s -= knob("STICK", 100)
             if s < best:
                 target, best = m, s
         if target is not None and self.ffa and obs["alive"] > 2:
@@ -529,7 +529,7 @@ class Bot:
             mx = math.cos(a) * radial + math.cos(a + math.pi / 2) * 0.85 * self.strafe
             my = math.sin(a) * radial + math.sin(a + math.pi / 2) * 0.85 * self.strafe
             goal = (x + mx * 20, y + my * 20)
-            if knob("PEEK", 0) > 0 and laser is not None and laser.get("cooldown", 0) > 0.6 and d > 50 and (laser.get("charge", 0) or 0) <= 0:
+            if knob("PEEK", 1) > 0 and laser is not None and laser.get("cooldown", 0) > 0.6 and d > 50 and (laser.get("charge", 0) or 0) <= 0:
                 if self.peek is None or t - self.peek_t > 1.5:
                     self.peek, self.peek_t = self._cover_point(pos, [target], zs), t
                 if self.peek is not None and math.dist(self.peek, (x, y)) < 22:
@@ -547,7 +547,7 @@ class Bot:
             goal = farm[1][:2] if fd > 35 else None
         elif self.ffa and calm and hp > 0.6 and self.crates and obs["t"] < knob("ECON_T", 260) and self._crate_goal(pos, zs) is not None:
             mode, goal = "econ", self._crate_goal(pos, zs)
-            boost = knob("ECON_BOOST", 0) > 0 and energy > 60 and math.dist(goal, (x, y)) > 50
+            boost = knob("ECON_BOOST", 1) > 0 and energy > 60 and math.dist(goal, (x, y)) > 50
         elif self.ffa:
             mode = "home"
             hp_ = self._home(obs, pos, zs, foes, t)
