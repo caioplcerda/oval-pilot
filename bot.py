@@ -23,6 +23,9 @@ UPGRADES = ["plating", "armor", "nanites", "laser_damage", "laser_charge", "ligh
             "gun_damage", "capacitor", "reactor", "servos", "jets", "gyros", "lightning_range", "gun_mag",
             "gun_velocity", "sensors", "lightning_chain", "laser_pierce", "mortar_reload", "mortar_velocity",
             "mortar_splash"]
+UPGRADES_KILL = ["laser_damage", "laser_charge", "plating", "armor", "lightning_efficiency", "gun_rate", "gun_damage",
+                 "nanites", "capacitor", "reactor", "lightning_range", "servos", "jets", "gyros", "gun_mag", "gun_velocity",
+                 "sensors", "lightning_chain", "laser_pierce", "mortar_reload", "mortar_velocity", "mortar_splash"]
 WANT = ("laser", "lightning")
 THREAT_SOUNDS = {"gun", "laser", "laser_charge", "lightning", "mortar", "explosion", "step", "boost", "jet"}
 
@@ -86,8 +89,9 @@ class Bot:
 
     def _pick_upgrade(self, offer):
         best, rank = 0, 1e9
+        order = UPGRADES_KILL if (not self.ffa and knob("UPG_KILL", 0) > 0) else UPGRADES
         for i, ch in enumerate(offer["choices"]):
-            r = UPGRADES.index(ch.get("id")) if ch.get("id") in UPGRADES else 99
+            r = order.index(ch.get("id")) if ch.get("id") in order else 99
             if r < rank:
                 best, rank = i, r
         return best
