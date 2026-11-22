@@ -482,7 +482,8 @@ class Bot:
         cube = None
         for c in obs["cubes"]:
             d = math.dist(c["pos"][:2], (x, y))
-            if d < 70 and abs(c["pos"][2] - z) < 4 and self._inside_soon(zs, c["pos"]) and (cube is None or d < cube[0]):
+            cr, cz = (70, 4) if self.ffa else (knob("PM_CUBE_R", 70), knob("PM_CUBE_Z", 4))
+            if d < cr and abs(c["pos"][2] - z) < cz and self._inside_soon(zs, c["pos"]) and (cube is None or d < cube[0]):
                 cube = (d, c["pos"])
 
         # ---------------------------------------------------------- mode
