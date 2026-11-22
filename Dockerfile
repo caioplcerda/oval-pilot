@@ -3,4 +3,6 @@
 FROM python:3.13.9-slim
 WORKDIR /bot
 COPY mechfight.py world.py bot.py ./
+ENV AB_PM_FMOVE=1
+ENV AB_FM_EXPO=60
 ENTRYPOINT ["python3", "-u", "/bot/bot.py"]
