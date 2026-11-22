@@ -543,7 +543,7 @@ class Bot:
                 if self.peek is not None and math.dist(self.peek, (x, y)) < 22:
                     goal = self.peek  # duck behind cover while the laser recharges
                     mode = "peek"
-            fb = knob("FIGHT_BOOST", 35) if self.ffa else knob("FIGHT_BOOST_P", 10)  # practice: boost hard in duels
+            fb = knob("FIGHT_BOOST", 35) if self.ffa else knob("FIGHT_BOOST_P", 35)  # practice: boost hard in duels
             boost = energy > fb and not (laser and (laser.get("charge", 0) or 0) > 0)
         elif cube:
             mode, goal = "cube", cube[1][:2]
