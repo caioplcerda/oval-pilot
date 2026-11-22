@@ -204,6 +204,46 @@ class Bot:
                     return best
         return best
 
+    def _fight_spot(self, pos, target, others, pref, cube, zs, strafe_dir):
+        """Pick a step (16 directions, 6 m) that keeps range and sight on the target while hidden from the others."""
+        w = self.w
+        if not w.ok:
+            return None
+        x, y = pos[0], pos[1]
+        tc = target["ctr"]
+        eyes = [(e["pos"][0], e["pos"][1], e["pos"][2] + 8) for e in others if e is not target and e["d"] < 170][:3]
+        best, bs = None, -1e18
+        for k in range(-1, 16):
+            if k < 0:
+                cx, cy, dx, dy, r = x, y, 0.0, 0.0, 0.0
+            else:
+                a = k * TAU / 16
+                dx, dy, r = math.cos(a), math.sin(a), 6.0
+                cx, cy = x + dx * r, y + dy * r
+                if not w.free[w.ncell(cx, cy)] or not w.straight_ok(x, y, cx, cy):
+                    continue
+            gz = w.ground(cx, cy)
+            d = math.dist((cx, cy), tc[:2])
+            sc = -1.1 * abs(d - pref) - 0.4 * r
+            if w.los((cx, cy, gz + 7), tc, 3.0):
+                sc += 45
+            body = (cx, cy, gz + 5)
+            for e in eyes:
+                if w.los(e, body, 3.0):
+                    sc -= knob("FM_EXPO", 30)
+            if math.dist((cx, cy), zs["c"]) > zs["r"] - 6:
+                sc -= 60
+            if cube is not None and cube[0] < 40:
+                sc += 1.5 * (cube[0] - math.dist((cx, cy), cube[1][:2]))
+            sc += 9 * (dx * strafe_dir[0] + dy * strafe_dir[1])
+            if k < 0:
+                sc -= 8
+            if sc > bs:
+                best, bs = (cx + dx * 14, cy + dy * 14) if k >= 0 else (x, y), sc
+            if self._late(30):
+                break
+        return best
+
     def _crate_goal(self, pos, zs):
         cands = [(math.dist(p[:2], pos[:2]), p) for p in self.crates.values() if p[2] < pos[2] + 8 and self._inside_soon(zs, p)]
         cands = [c for c in cands if 15 < c[0] < 260]
@@ -558,6 +598,11 @@ class Bot:
             mx = math.cos(a) * radial + math.cos(a + math.pi / 2) * 0.85 * self.strafe
             my = math.sin(a) * radial + math.sin(a + math.pi / 2) * 0.85 * self.strafe
             goal = (x + mx * 20, y + my * 20)
+            if knob("PM_FMOVE" if pm else "FMOVE", 0) > 0:
+                sd = (math.cos(a + math.pi / 2) * self.strafe, math.sin(a + math.pi / 2) * self.strafe)
+                fs = self._fight_spot(pos, target, threats, pref, cube, zs, sd)
+                if fs is not None:
+                    goal = fs
             fl = knob("PM_FLOOT", 70) * (0.57 if hp <= 0.5 else 1.0) if pm else 0
             if fl > 0 and cube is not None and cube[0] < fl:
                 goal = cube[1][:2]  # scoop cubes mid-fight
