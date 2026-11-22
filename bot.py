@@ -425,7 +425,8 @@ class Bot:
                         back = abs(wrap(target["aim"][0] - math.atan2(y - target["pos"][1], x - target["pos"][0]))) > math.pi / 2
                         if back:
                             dmg *= 1.5
-                        lethal = dmg >= target["hp"] + 5
+                        lk = knob("PM_LETHAL_K", 1.0) if (not self.ffa and obs["t"] > 20) else 1.0
+                        lethal = dmg >= lk * target["hp"] + 5
                     if ((ch >= full - 0.02 or lethal) and on) or ch > full + laser["stats"].get("hold_s", 2.0) - 0.3:
                         fire[li] = False  # release: the beam fires now
                     else:
@@ -539,7 +540,7 @@ class Bot:
         elif target is not None:
             mode = "fight"
             d = target["d"]
-            pref = knob("PREF_LASER", 110) if laser else (26 if light else knob("PREF_GUN", 60))
+            pref = (knob("PM_PREF_LASER", 110) if pm else knob("PREF_LASER", 110)) if laser else (26 if light else knob("PREF_GUN", 60))
             if laser and light and d < 55:
                 pref = 26
             if target["hp"] < 0.25 * target["max_hp"] and hp > 0.4:
