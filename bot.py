@@ -348,8 +348,8 @@ class Bot:
                 s -= 120
             if t - self.attackers.get(m["id"], -99) < 4:
                 s -= 80
-            if m["id"] == self.focus_id and t - self.focus_t < 3:
-                s -= knob("STICK", 100)
+            if m["id"] == self.focus_id and t - self.focus_t < 3 and (self.ffa or knob("STICK_PRACTICE", 0) > 0):
+                s -= knob("STICK", 100)  # focus fire helps in a free-for-all; in practice it cost points
             if s < best:
                 target, best = m, s
         if target is not None and self.ffa and obs["alive"] > 2:
