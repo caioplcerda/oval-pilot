@@ -403,7 +403,16 @@ class Bot:
                 if ch > 0:
                     aim_yaw, aim_pitch = l_yaw, l_pitch
                     on = abs(wrap(l_yaw - cy)) < tol and abs(l_pitch - cp) < tolp * 1.5
-                    if (ch >= full - 0.02 and on) or ch > full + laser["stats"].get("hold_s", 2.0) - 0.3:
+                    lethal = False
+                    if target is not None and ch >= laser["stats"].get("min_charge", 0.15):
+                        mf_ = laser["stats"].get("min_frac", 0.35)
+                        dmg = laser["stats"].get("damage", 315) * (mf_ + (1 - mf_) * min(1.0, ch / full))
+                        dmg *= 1 + 0.04 * min(me.get("cubes", 0), 10)
+                        back = abs(wrap(target["aim"][0] - math.atan2(y - target["pos"][1], x - target["pos"][0]))) > math.pi / 2
+                        if back:
+                            dmg *= 1.5
+                        lethal = dmg >= target["hp"] + 5
+                    if ((ch >= full - 0.02 or lethal) and on) or ch > full + laser["stats"].get("hold_s", 2.0) - 0.3:
                         fire[li] = False  # release: the beam fires now
                     else:
                         fire[li] = True
@@ -484,6 +493,14 @@ class Bot:
         elif zs["go"]:
             mode, goal = "zone", zs["nc"]
             boost = zs["need"] > 60 and energy > 50
+        elif target is None and t - self.hurt_t < 2.5 and self.hurt_bearing is not None and knob("HIDE", 1) > 0:
+            mode = "hide"
+            if self.cover is None or t - self.cover_t > 1.0:
+                b = self.hurt_bearing
+                ghost = [{"pos": [x + math.cos(b) * 90, y + math.sin(b) * 90, z]}]
+                self.cover, self.cover_t = self._cover_point(pos, ghost, zs), t
+            goal = self.cover
+            boost = energy > 30
         elif not armed and want and (target is None or target["d"] > 45 or want[3] < 20):
             mode, goal = "arm", want[1][:2]
             boost = energy > (20 if t < 60 else 50)
