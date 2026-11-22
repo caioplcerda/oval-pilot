@@ -3,5 +3,5 @@
 FROM python:3.13.9-slim
 WORKDIR /bot
 COPY mechfight.py world.py bot.py ./
-ENV AB_STICK=100
+ENV AB_PEEK=1
 ENTRYPOINT ["python3", "-u", "/bot/bot.py"]
