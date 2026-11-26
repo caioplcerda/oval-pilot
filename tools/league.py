@@ -42,8 +42,7 @@ def main():
         fac = arena.make_factory(spec, args.kit)
         entries += [(label, fac)] * int(count)
     assert len(entries) == 16, "entry counts must sum to 16 (got %d)" % len(entries)
-    sample_mod = next((m for m in arena._MODS.values()), None)
-    world = sample_mod._shared[0] if sample_mod is not None else None
+    world = None  # physics always on the reference map model (bots may bring their own)
     if world is None:
         import sim as S
         world = S.B.World(os.path.join(args.kit, "arena"))

@@ -1,0 +1,59 @@
+[
+ {
+  "name": "c3_0",
+  "mode": "league",
+  "matches": 60,
+  "seed0": 6200000,
+  "entries": [
+   "base=proc:/tmp/claude-own5:/Users/caiolacerda/.local/share/uv/python/cpython-3.13-macos-aarch64-none/bin/python3.13 -u bot.py=2",
+   "stick=proc:/tmp/claude-own5:env AB_STICK=100 /Users/caiolacerda/.local/share/uv/python/cpython-3.13-macos-aarch64-none/bin/python3.13 -u bot.py=2",
+   "peek=proc:/tmp/claude-own5:env AB_PEEK=1 /Users/caiolacerda/.local/share/uv/python/cpython-3.13-macos-aarch64-none/bin/python3.13 -u bot.py=2",
+   "stickpeek=proc:/tmp/claude-own5:env AB_STICK=100 AB_PEEK=1 /Users/caiolacerda/.local/share/uv/python/cpython-3.13-macos-aarch64-none/bin/python3.13 -u bot.py=2",
+   "fb50=proc:/tmp/claude-own5:env AB_FIGHT_BOOST=50 /Users/caiolacerda/.local/share/uv/python/cpython-3.13-macos-aarch64-none/bin/python3.13 -u bot.py=2",
+   "o0=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/Britogus7_Mech-Royale:bot.py=1",
+   "o1=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/Warrior-hound_mech-royale:bot.py=1",
+   "o2=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/atharvatripathi2026_gtgoats_mech_royale:bot.py=1",
+   "o3=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/jmonked_monked-mech-royale:example_bot.py=1",
+   "o4=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/JosiahAklog_nexus-mech-royale:bot.py=1",
+   "o5=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/Hassene26_mech-royale-bot:main.py=1"
+  ]
+ },
+ {
+  "name": "c3_1",
+  "mode": "league",
+  "matches": 60,
+  "seed0": 6210000,
+  "entries": [
+   "base=proc:/tmp/claude-own5:/Users/caiolacerda/.local/share/uv/python/cpython-3.13-macos-aarch64-none/bin/python3.13 -u bot.py=2",
+   "stick=proc:/tmp/claude-own5:env AB_STICK=100 /Users/caiolacerda/.local/share/uv/python/cpython-3.13-macos-aarch64-none/bin/python3.13 -u bot.py=2",
+   "peek=proc:/tmp/claude-own5:env AB_PEEK=1 /Users/caiolacerda/.local/share/uv/python/cpython-3.13-macos-aarch64-none/bin/python3.13 -u bot.py=2",
+   "stickpeek=proc:/tmp/claude-own5:env AB_STICK=100 AB_PEEK=1 /Users/caiolacerda/.local/share/uv/python/cpython-3.13-macos-aarch64-none/bin/python3.13 -u bot.py=2",
+   "fb50=proc:/tmp/claude-own5:env AB_FIGHT_BOOST=50 /Users/caiolacerda/.local/share/uv/python/cpython-3.13-macos-aarch64-none/bin/python3.13 -u bot.py=2",
+   "o0=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/Britogus7_Mech-Royale:bot.py=1",
+   "o1=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/Warrior-hound_mech-royale:bot.py=1",
+   "o2=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/atharvatripathi2026_gtgoats_mech_royale:bot.py=1",
+   "o3=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/jmonked_monked-mech-royale:example_bot.py=1",
+   "o4=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/JosiahAklog_nexus-mech-royale:bot.py=1",
+   "o5=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/Hassene26_mech-royale-bot:main.py=1"
+  ]
+ },
+ {
+  "name": "c3_2",
+  "mode": "league",
+  "matches": 60,
+  "seed0": 6220000,
+  "entries": [
+   "base=proc:/tmp/claude-own5:/Users/caiolacerda/.local/share/uv/python/cpython-3.13-macos-aarch64-none/bin/python3.13 -u bot.py=2",
+   "stick=proc:/tmp/claude-own5:env AB_STICK=100 /Users/caiolacerda/.local/share/uv/python/cpython-3.13-macos-aarch64-none/bin/python3.13 -u bot.py=2",
+   "peek=proc:/tmp/claude-own5:env AB_PEEK=1 /Users/caiolacerda/.local/share/uv/python/cpython-3.13-macos-aarch64-none/bin/python3.13 -u bot.py=2",
+   "stickpeek=proc:/tmp/claude-own5:env AB_STICK=100 AB_PEEK=1 /Users/caiolacerda/.local/share/uv/python/cpython-3.13-macos-aarch64-none/bin/python3.13 -u bot.py=2",
+   "fb50=proc:/tmp/claude-own5:env AB_FIGHT_BOOST=50 /Users/caiolacerda/.local/share/uv/python/cpython-3.13-macos-aarch64-none/bin/python3.13 -u bot.py=2",
+   "o0=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/Britogus7_Mech-Royale:bot.py=1",
+   "o1=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/Warrior-hound_mech-royale:bot.py=1",
+   "o2=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/atharvatripathi2026_gtgoats_mech_royale:bot.py=1",
+   "o3=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/jmonked_monked-mech-royale:example_bot.py=1",
+   "o4=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/JosiahAklog_nexus-mech-royale:bot.py=1",
+   "o5=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/Hassene26_mech-royale-bot:main.py=1"
+  ]
+ }
+]

@@ -1,0 +1,59 @@
+[
+ {
+  "name": "c1_0",
+  "mode": "league",
+  "matches": 60,
+  "seed0": 6000000,
+  "entries": [
+   "base=proc:/Users/caiolacerda/Projetos/buildathon/ownbot:/Users/caiolacerda/.local/share/uv/python/cpython-3.13-macos-aarch64-none/bin/python3.13 -u bot.py=2",
+   "calm90=proc:/Users/caiolacerda/Projetos/buildathon/ownbot:env AB_CALM_R=90 /Users/caiolacerda/.local/share/uv/python/cpython-3.13-macos-aarch64-none/bin/python3.13 -u bot.py=2",
+   "cubef=proc:/Users/caiolacerda/Projetos/buildathon/ownbot:env AB_CUBE_FIGHT=25 /Users/caiolacerda/.local/share/uv/python/cpython-3.13-macos-aarch64-none/bin/python3.13 -u bot.py=2",
+   "econb=proc:/Users/caiolacerda/Projetos/buildathon/ownbot:env AB_ECON_BOOST=1 /Users/caiolacerda/.local/share/uv/python/cpython-3.13-macos-aarch64-none/bin/python3.13 -u bot.py=2",
+   "combo=proc:/Users/caiolacerda/Projetos/buildathon/ownbot:env AB_CALM_R=90 AB_CUBE_FIGHT=25 AB_ECON_BOOST=1 AB_ECON_T=400 /Users/caiolacerda/.local/share/uv/python/cpython-3.13-macos-aarch64-none/bin/python3.13 -u bot.py=2",
+   "o0=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/Britogus7_Mech-Royale:bot.py=1",
+   "o1=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/Warrior-hound_mech-royale:bot.py=1",
+   "o2=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/atharvatripathi2026_gtgoats_mech_royale:bot.py=1",
+   "o3=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/jmonked_monked-mech-royale:example_bot.py=1",
+   "o4=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/JosiahAklog_nexus-mech-royale:bot.py=1",
+   "o5=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/Hassene26_mech-royale-bot:main.py=1"
+  ]
+ },
+ {
+  "name": "c1_1",
+  "mode": "league",
+  "matches": 60,
+  "seed0": 6010000,
+  "entries": [
+   "base=proc:/Users/caiolacerda/Projetos/buildathon/ownbot:/Users/caiolacerda/.local/share/uv/python/cpython-3.13-macos-aarch64-none/bin/python3.13 -u bot.py=2",
+   "calm90=proc:/Users/caiolacerda/Projetos/buildathon/ownbot:env AB_CALM_R=90 /Users/caiolacerda/.local/share/uv/python/cpython-3.13-macos-aarch64-none/bin/python3.13 -u bot.py=2",
+   "cubef=proc:/Users/caiolacerda/Projetos/buildathon/ownbot:env AB_CUBE_FIGHT=25 /Users/caiolacerda/.local/share/uv/python/cpython-3.13-macos-aarch64-none/bin/python3.13 -u bot.py=2",
+   "econb=proc:/Users/caiolacerda/Projetos/buildathon/ownbot:env AB_ECON_BOOST=1 /Users/caiolacerda/.local/share/uv/python/cpython-3.13-macos-aarch64-none/bin/python3.13 -u bot.py=2",
+   "combo=proc:/Users/caiolacerda/Projetos/buildathon/ownbot:env AB_CALM_R=90 AB_CUBE_FIGHT=25 AB_ECON_BOOST=1 AB_ECON_T=400 /Users/caiolacerda/.local/share/uv/python/cpython-3.13-macos-aarch64-none/bin/python3.13 -u bot.py=2",
+   "o0=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/Britogus7_Mech-Royale:bot.py=1",
+   "o1=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/Warrior-hound_mech-royale:bot.py=1",
+   "o2=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/atharvatripathi2026_gtgoats_mech_royale:bot.py=1",
+   "o3=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/jmonked_monked-mech-royale:example_bot.py=1",
+   "o4=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/JosiahAklog_nexus-mech-royale:bot.py=1",
+   "o5=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/Hassene26_mech-royale-bot:main.py=1"
+  ]
+ },
+ {
+  "name": "c1_2",
+  "mode": "league",
+  "matches": 60,
+  "seed0": 6020000,
+  "entries": [
+   "base=proc:/Users/caiolacerda/Projetos/buildathon/ownbot:/Users/caiolacerda/.local/share/uv/python/cpython-3.13-macos-aarch64-none/bin/python3.13 -u bot.py=2",
+   "calm90=proc:/Users/caiolacerda/Projetos/buildathon/ownbot:env AB_CALM_R=90 /Users/caiolacerda/.local/share/uv/python/cpython-3.13-macos-aarch64-none/bin/python3.13 -u bot.py=2",
+   "cubef=proc:/Users/caiolacerda/Projetos/buildathon/ownbot:env AB_CUBE_FIGHT=25 /Users/caiolacerda/.local/share/uv/python/cpython-3.13-macos-aarch64-none/bin/python3.13 -u bot.py=2",
+   "econb=proc:/Users/caiolacerda/Projetos/buildathon/ownbot:env AB_ECON_BOOST=1 /Users/caiolacerda/.local/share/uv/python/cpython-3.13-macos-aarch64-none/bin/python3.13 -u bot.py=2",
+   "combo=proc:/Users/caiolacerda/Projetos/buildathon/ownbot:env AB_CALM_R=90 AB_CUBE_FIGHT=25 AB_ECON_BOOST=1 AB_ECON_T=400 /Users/caiolacerda/.local/share/uv/python/cpython-3.13-macos-aarch64-none/bin/python3.13 -u bot.py=2",
+   "o0=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/Britogus7_Mech-Royale:bot.py=1",
+   "o1=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/Warrior-hound_mech-royale:bot.py=1",
+   "o2=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/atharvatripathi2026_gtgoats_mech_royale:bot.py=1",
+   "o3=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/jmonked_monked-mech-royale:example_bot.py=1",
+   "o4=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/JosiahAklog_nexus-mech-royale:bot.py=1",
+   "o5=proc:/Users/caiolacerda/Projetos/buildathon/research/opps/Hassene26_mech-royale-bot:main.py=1"
+  ]
+ }
+]

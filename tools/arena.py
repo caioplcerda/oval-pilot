@@ -758,7 +758,7 @@ def make_factory(spec, kit):
     path, _, flags = spec[4:].partition("?")
     flagset = set(f for f in flags.split(",") if f)
     mod = load_bot_module(path)
-    if not hasattr(mod, "_shared"):
+    if not hasattr(mod, "_shared") and not hasattr(mod, "PathSearch"):
         w = mod.World(os.path.join(kit, "arena"))
         nav = mod.Nav(w) if hasattr(mod, "Nav") and w.ok else None
         mod._shared = (w, nav)
@@ -767,6 +767,13 @@ def make_factory(spec, kit):
             mod.Nav = lambda _w, _n=nav: _n
 
     def factory(hello, world):
+        if hasattr(mod, "PathSearch"):  # own-map bot: give it the real arena directory once
+            if not hasattr(mod, "_own_world"):
+                mod._own_world = mod.World(os.path.abspath(os.path.join(kit, "arena")))
+                mod.World = lambda _d, _w=mod._own_world: _w
+            inst = mod.Bot(dict(hello, map={"dir": os.path.abspath(os.path.join(kit, "arena")), "files": []}))
+            inst.flags = flagset
+            return inst
         inst = mod.Bot(hello)
         inst.flags = flagset
         return inst

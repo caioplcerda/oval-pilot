@@ -19,6 +19,8 @@ import time
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.dirname(HERE))
 import bot as B  # noqa: E402
+PHYS = B  # physics always uses this map model; a --botfile bot may bring its own
+ARENA_DIR = ""
 
 DT = 0.1  # one decision per 0.1 s
 NOISE_MULT = 5.0  # house-bot aim noise multiplier: with HUNT 1.0 and 3 lasers the kit example scores ~1.2 (real 1.15)
@@ -60,6 +62,9 @@ def weapon(kind, cfg):
     return w
 
 
+_FOREIGN_WORLD = {}
+
+
 class Sim:
     def __init__(self, cfg, world, seed, bot_cls):
         self.cfg, self.w, self.rng = cfg, world, random.Random(seed)
@@ -94,6 +99,16 @@ class Sim:
 
     def _bot_init(self, hello):
         # reuse the already-loaded world instead of re-reading the map
+        if B is not PHYS:  # foreign bot: let it build its own map model from the real arena files
+            if B not in _FOREIGN_WORLD:
+                _FOREIGN_WORLD[B] = B.World(ARENA_DIR)
+            orig = B.World
+            B.World = lambda _d: _FOREIGN_WORLD[B]
+            try:
+                self.bot.__init__(dict(hello, map={"dir": ARENA_DIR, "files": []}))
+            finally:
+                B.World = orig
+            return
         orig = B.World
         B.World = lambda _d: self.w
         try:
@@ -564,7 +579,7 @@ class ExampleBot:
 
 
 def main():
-    global NOISE_MULT, LASER_BOTS, HUNT_MULT, B, SQUAD, SQUAD_LATE, SQUAD_DEF
+    global NOISE_MULT, LASER_BOTS, HUNT_MULT, B, SQUAD, SQUAD_LATE, SQUAD_DEF, ARENA_DIR
     ap = argparse.ArgumentParser()
     ap.add_argument("--matches", type=int, default=6)
     ap.add_argument("--kit", default="..")
@@ -588,7 +603,8 @@ def main():
     import gzip
     with gzip.open(os.path.join(args.kit, "check", "stream.jsonl.gz"), "rt") as f:
         cfg = json.loads(f.readline())["config"]
-    world = B.World(os.path.join(args.kit, "arena"))
+    ARENA_DIR = os.path.abspath(os.path.join(args.kit, "arena"))
+    world = PHYS.World(ARENA_DIR)
     NOISE_MULT, LASER_BOTS, HUNT_MULT = args.noise, args.lasers, args.hunt
     SQUAD, SQUAD_LATE, SQUAD_DEF = args.squad, args.squad_late, args.squad_def
     pts = []
